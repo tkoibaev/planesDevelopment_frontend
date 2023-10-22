@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 
 import InfoBlock from "../../components/InfoBlock/InfoBlock";
@@ -11,7 +11,30 @@ import { Link } from "react-router-dom";
 import styles from "./mainpage.module.scss";
 import Button from "../../components/Button/Button";
 
+export interface Option {
+  id: number;
+  name: string;
+}
+
 const DOMEN = "http://127.0.0.1:8000/";
+export const CATEGORIES = [
+  {
+    id: 0,
+    name: "Любая категория",
+  },
+  {
+    id: 1,
+    name: "Салоны",
+  },
+  {
+    id: 2,
+    name: "Двигатели",
+  },
+  {
+    id: 3,
+    name: "Авионика",
+  },
+];
 
 type cardInfoProps = {
   id: number;
@@ -26,8 +49,29 @@ type cardInfoProps = {
 const MainPage = () => {
   const [items, setItems] = useState([]);
 
+  const [searchValue, setSearchValue] = useState("");
+  const [sliderValues, setSliderValues] = useState([0, 10000]);
+  const [categoryValue, setCategoryValue] = useState("Любая категория");
+
+  const handleSliderChange = (values: number[]) => {
+    setSliderValues(values);
+  };
+
+  const handleDropDownChange = (selectedOption: Option) => {
+    setCategoryValue(selectedOption.name);
+  };
+
   useEffect(() => {
-    fetch(`${DOMEN}/options/`)
+    const params = searchValue
+      ? `?search=${encodeURIComponent(searchValue)}&min_price=${
+          sliderValues[0]
+        }&max_price=${sliderValues[1]}&category=${encodeURIComponent(
+          categoryValue
+        )}`
+      : `?min_price=${sliderValues[0]}&max_price=${
+          sliderValues[1]
+        }&category=${encodeURIComponent(categoryValue)}`;
+    fetch(`${DOMEN}/options/${params}`)
       .then((response) => response.json())
       .then((data) => {
         const options = data.options;
@@ -36,7 +80,7 @@ const MainPage = () => {
       .catch((error) => {
         console.log("Ошибка при выполнении запроса:", error);
       });
-  }, []);
+  }, [searchValue, sliderValues, categoryValue]);
 
   return (
     <div className={styles.mainpage}>
@@ -44,12 +88,21 @@ const MainPage = () => {
         <InfoBlock />
         <div className={styles.mainpage__actions}>
           <div className={styles.mainpage__input}>
-            <Input />
+            <Input onChangeValue={(i) => setSearchValue(i)} />
             <Button>Поиск</Button>
           </div>
           <div className={styles.mainpage__filters}>
-            <DropDown />
-            <SliderFilter minimum={100} maximum={10000} title="Price Range" />
+            <DropDown
+              onChangeValue={handleDropDownChange}
+              options={CATEGORIES}
+              defaultTitle="Категория опции"
+            />
+            <SliderFilter
+              onChangeValues={handleSliderChange}
+              minimum={0}
+              maximum={10000}
+              title="Price Range"
+            />
           </div>
         </div>
 

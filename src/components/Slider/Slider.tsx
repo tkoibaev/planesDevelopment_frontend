@@ -6,14 +6,25 @@ import Slider from "react-slider";
 import "./slider.css";
 
 export type SliderProps = {
-  /** Дополнительный класс */
   minimum: number;
   maximum: number;
   title?: string;
+  onChangeValues: (values: number[]) => void;
 };
 
-const SliderFilter: React.FC<SliderProps> = ({ minimum, maximum, title }) => {
+const SliderFilter: React.FC<SliderProps> = ({
+  minimum,
+  maximum,
+  title,
+  onChangeValues,
+}) => {
   const [values, setValues] = useState([minimum, maximum]);
+
+  const handleSliderChange = (newValues: number[]) => {
+    setValues(newValues);
+    onChangeValues(newValues);
+  };
+
   return (
     <div className="filter">
       <div className="filter__title">{title}</div>
@@ -22,7 +33,7 @@ const SliderFilter: React.FC<SliderProps> = ({ minimum, maximum, title }) => {
       </div>
       <Slider
         className="filter__slider"
-        onChange={setValues}
+        onChange={handleSliderChange}
         value={values}
         min={minimum}
         max={maximum}

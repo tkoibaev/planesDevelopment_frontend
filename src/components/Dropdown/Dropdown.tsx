@@ -1,26 +1,53 @@
 import { Dropdown } from "react-bootstrap";
 
 import styles from "./dropdown.module.scss";
+import { useState } from "react";
 
-function DropDown() {
+export interface Option {
+  id: number;
+  name: string;
+}
+
+export type DropDownProps = {
+  options: Option[];
+  defaultTitle: string;
+  onChangeValue: (selectedOption: Option) => void; // Добавленный проп
+};
+
+const DropDown: React.FC<DropDownProps> = ({
+  options,
+  defaultTitle,
+  onChangeValue,
+}) => {
+  const [title, setTitle] = useState<Option>(options[0]);
+
+  const handleSelect = (selectedOption: Option) => {
+    setTitle(selectedOption);
+    onChangeValue(selectedOption); // Вызов обратного вызова
+  };
+
   return (
     <Dropdown className={styles.dropdown}>
       <Dropdown.Toggle
         className={styles.dropdown__toggle}
-        variant=" primary"
+        variant="primary"
         id="dropdown-basic"
       >
-        Dropdown Navigation Button
+        {title ? title.name : defaultTitle}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdown__menu}>
-        <Dropdown.Item href="#/action-1">Dropdown Item 1</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Dropdown Item 2</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Dropdown Item 3</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Dropdown Item 4</Dropdown.Item>
+        {options.map((option) => (
+          <Dropdown.Item
+            onClick={() => handleSelect(option)} // Изменено с onClick={() => setTitle(option)}
+            key={option.id}
+          >
+            {option.name}
+          </Dropdown.Item>
+        ))}
       </Dropdown.Menu>
     </Dropdown>
   );
-}
+};
 
 export default DropDown;
