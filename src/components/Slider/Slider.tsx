@@ -7,15 +7,13 @@ import "./slider.css";
 
 export type SliderProps = {
   /** Дополнительный класс */
-  minimum?: number;
-  maximum?: number;
+  minimum: number;
+  maximum: number;
   title?: string;
 };
 
-const MIN = 100;
-const MAX = 1000;
 const SliderFilter: React.FC<SliderProps> = ({ minimum, maximum, title }) => {
-  const [values, setValues] = useState([MIN, MAX]);
+  const [values, setValues] = useState([minimum, maximum]);
   return (
     <div className="filter">
       <div className="filter__title">{title}</div>
