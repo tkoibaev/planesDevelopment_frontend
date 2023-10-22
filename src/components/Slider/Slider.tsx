@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import Slider from "react-slider";
 import debounce from "lodash.debounce";
@@ -20,9 +20,16 @@ const SliderFilter: React.FC<SliderProps> = ({
 }) => {
   const [values, setValues] = useState([minimum, maximum]);
 
+  const onUpdateValues = useCallback(
+    debounce((newValues) => {
+      onChangeValues(newValues);
+    }, 1000),
+    []
+  );
+
   const handleSliderChange = (newValues: number[]) => {
     setValues(newValues);
-    onChangeValues(newValues);
+    onUpdateValues(newValues);
   };
 
   return (
