@@ -1,0 +1,8 @@
+@import "../../styles/variables.scss";
+
+.planepage {
+  .container {
+    max-width: $container-width;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,7 @@
+@import "../../styles/variables.scss";
+
+.dropdown {
+  &__toggle {
+    border: 1px solid $brand-color;
+  }
+}

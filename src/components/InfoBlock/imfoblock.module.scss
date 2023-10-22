@@ -1,0 +1,27 @@
+@import "../../styles/variables.scss";
+
+.infoblock {
+  margin-top: 50px;
+  .container {
+    width: 700px;
+    margin: 0 auto;
+  }
+  &__title {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    &_text {
+      font-size: 50px;
+      font-weight: 700;
+    }
+
+    &_gif {
+      width: 60px;
+    }
+  }
+  &__subtitle {
+    font-size: 18px;
+    color: $text-secondary-color;
+  }
+}

@@ -1,0 +1,30 @@
+@import "../../styles/variables.scss";
+
+.breadcrumps {
+  text-align: left;
+  max-width: $container-width;
+  margin: 10px auto;
+}
+
+.breadcrumps > * {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.crump {
+  &:after {
+    color: $brand-color;
+    content: ">";
+    margin-left: 10px;
+  }
+
+  &:last-child {
+    &::after {
+      display: none;
+    }
+  }
+
+  a {
+    color: $brand-color;
+  }
+}
