@@ -8,12 +8,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   state?: boolean;
 };
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  onClick,
-  className,
-  ...rest
-}) => {
+const Button: React.FC<ButtonProps> = ({ children }) => {
   return <button className={styles.button}>{children}</button>;
 };
 

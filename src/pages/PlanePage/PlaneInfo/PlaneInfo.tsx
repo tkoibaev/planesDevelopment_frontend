@@ -48,8 +48,8 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
         {info && info.image ? (
           <img
             className={styles.planeinfo__image_img}
-            src={info.image}
-            alt="aaa"
+            src={`../${info.image}`}
+            alt="sssss"
           ></img>
         ) : (
           <img
@@ -65,11 +65,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
             {info && info.title.replace("minio://", "")}
           </div>
           <div className={styles.planeinfo__common_subtitle}>
-            {" "}
-            Ищете свой собственный крылатый аппарат? Мы предлагаем широкий выбор
-            самолетов для любых потребностей и предпочтений. От маленьких и
-            удобных до роскошных и мощных, у нас есть самолеты, которые
-            впечатлят вас.
+            {info && info.description}
           </div>
         </div>
         <div className={styles.planeinfo__common_actions}>

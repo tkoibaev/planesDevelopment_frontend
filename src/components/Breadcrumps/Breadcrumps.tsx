@@ -1,6 +1,4 @@
-import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import homeSvg from "../../assets/icons/home.gif";
 
 import styles from "./breadcrumps.module.scss";
 

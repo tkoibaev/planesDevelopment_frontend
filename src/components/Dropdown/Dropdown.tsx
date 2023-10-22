@@ -20,25 +20,18 @@ const DropDown: React.FC<DropDownProps> = ({
 
   const handleSelect = (selectedOption: Option) => {
     setTitle(selectedOption);
-    onChangeValue(selectedOption); // Вызов обратного вызова
+    onChangeValue(selectedOption);
   };
 
   return (
     <Dropdown className={styles.dropdown}>
-      <Dropdown.Toggle
-        className={styles.dropdown__toggle}
-        variant="primary"
-        id="dropdown-basic"
-      >
+      <Dropdown.Toggle className={styles.dropdown__toggle}>
         {title ? title.name : defaultTitle}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdown__menu}>
         {options.map((option) => (
-          <Dropdown.Item
-            onClick={() => handleSelect(option)} // Изменено с onClick={() => setTitle(option)}
-            key={option.id}
-          >
+          <Dropdown.Item onClick={() => handleSelect(option)} key={option.id}>
             {option.name}
           </Dropdown.Item>
         ))}

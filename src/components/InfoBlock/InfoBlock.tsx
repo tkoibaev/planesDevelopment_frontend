@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./imfoblock.module.scss";
 import planeGif from "../../assets/icons/take-off.gif";
 

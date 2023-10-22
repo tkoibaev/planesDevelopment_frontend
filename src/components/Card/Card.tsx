@@ -5,21 +5,14 @@ import styles from "./card.module.scss";
 import defPlane from "../../assets/icons/flight.png";
 
 import { cardInfoProps } from "../../types";
+// import svg from "../../assets/react.svg"
 
-const Card: React.FC<cardInfoProps> = ({
-  id,
-  title,
-  category,
-  features,
-  description,
-  price,
-  image,
-}) => {
+const Card: React.FC<cardInfoProps> = ({ title, category, price, image }) => {
   return (
     <div className={styles.card}>
       <div className={styles.card__image}>
         {image ? (
-          <img className={styles.card__image_img} src={image} alt="sss"></img>
+          <img className={styles.card__image_img} src={image} alt="aaa"></img>
         ) : (
           <img
             className={styles.card__image_img}

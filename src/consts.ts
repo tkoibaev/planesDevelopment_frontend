@@ -18,7 +18,7 @@ export const CATEGORIES = [
     name: "Авионика",
   },
 ];
-
+// import engine from "./assets/engine.png"
 export const OptionsMock = [
   {
     id: 1,
@@ -28,7 +28,7 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 1000,
-    image: "",
+    image: "src/assets/mockImg/cabin.png",
   },
   {
     id: 2,
@@ -38,7 +38,7 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 2000,
-    image: "",
+    image: "src/assets/mockImg/engine.png",
   },
   {
     id: 3,
@@ -48,7 +48,7 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 3000,
-    image: "",
+    image: "src/assets/mockImg/cabin.png",
   },
   {
     id: 4,
@@ -58,7 +58,7 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 4000,
-    image: "",
+    image: "src/assets/mockImg/engine.png",
   },
   {
     id: 5,
@@ -68,7 +68,7 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 5000,
-    image: "",
+    image: "src/assets/mockImg/control.png",
   },
   {
     id: 6,
@@ -78,6 +78,6 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 6000,
-    image: "",
+    image: "src/assets/mockImg/engine.png",
   },
 ];

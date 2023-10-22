@@ -1,4 +1,3 @@
-import React from "react";
 import cartSvg from "../../assets/icons/bag-2.svg";
 import userSvg from "../../assets/icons/user.svg";
 import styles from "./header.module.scss";
