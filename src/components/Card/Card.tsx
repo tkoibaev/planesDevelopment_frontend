@@ -25,7 +25,7 @@ const Card: React.FC<cardInfoProps> = ({ title, category, price, image }) => {
         <div className={styles.card__inner_title}>{title}</div>
         <div className={styles.card__inner_subtitle}>{category}</div>
         <div className={styles.card__inner_action}>
-          <div className={styles.card__inner_action_price}>{price} ₽</div>
+          <div className={styles.card__inner_action_price}>{price} $</div>
           <Button> В корзину</Button>
         </div>
       </div>

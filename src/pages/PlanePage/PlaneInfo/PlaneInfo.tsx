@@ -48,7 +48,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
         {info && info.image ? (
           <img
             className={styles.planeinfo__image_img}
-            src={`../${info.image}`}
+            src={info.image}
             alt="sssss"
           ></img>
         ) : (
@@ -62,7 +62,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
       <div className={styles.planeinfo__common}>
         <div className={styles.planeinfo__common_text}>
           <div className={styles.planeinfo__common_title}>
-            {info && info.title.replace("minio://", "")}
+            {info && info.title}
           </div>
           <div className={styles.planeinfo__common_subtitle}>
             {info && info.description}
