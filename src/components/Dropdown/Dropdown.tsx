@@ -3,10 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import styles from "./dropdown.module.scss";
 import { useState } from "react";
 
-export interface Option {
-  id: number;
-  name: string;
-}
+import Option from "../../types";
 
 export type DropDownProps = {
   options: Option[];

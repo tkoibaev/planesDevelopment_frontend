@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import styles from "./input.module.scss";
+
+import debounce from "lodash.debounce";
+
 export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "onChange" | "value"
@@ -10,8 +13,19 @@ export type InputProps = Omit<
 };
 
 const Input: React.FC<InputProps> = ({ onChangeValue }) => {
+  // const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   onChangeValue(event.target.value);
+  // };
+
+  const onUpdateSearch = useCallback(
+    debounce((str) => {
+      onChangeValue(str);
+    }, 1000),
+    []
+  );
+
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeValue(event.target.value);
+    onUpdateSearch(event.target.value);
   };
 
   return (

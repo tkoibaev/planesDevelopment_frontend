@@ -2,20 +2,11 @@ import React from "react";
 import Button from "../Button/Button";
 
 import styles from "./card.module.scss";
-import userSvg from "../../assets/icons/user.svg";
 import defPlane from "../../assets/icons/flight.png";
 
-type CardProps = {
-  id: number;
-  title: string;
-  category: string;
-  features: [];
-  description: string;
-  price: number;
-  image: string;
-};
+import { cardInfoProps } from "../../types";
 
-const Card: React.FC<CardProps> = ({
+const Card: React.FC<cardInfoProps> = ({
   id,
   title,
   category,

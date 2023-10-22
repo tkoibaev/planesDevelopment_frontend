@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import Slider from "react-slider";
+import debounce from "lodash.debounce";
 
-// import styles from "./slider.module.scss";
 import "./slider.css";
 
 export type SliderProps = {

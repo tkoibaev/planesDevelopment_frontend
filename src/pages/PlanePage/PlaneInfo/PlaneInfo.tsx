@@ -1,34 +1,27 @@
 import React, { useEffect, useState } from "react";
-import userSvg from "../../../assets/icons/user.svg";
-import styles from "./planeinfo.module.scss";
 
 import Button from "../../../components/Button/Button";
 import defPlane from "../../../assets/icons/flight.png";
 
+import styles from "./planeinfo.module.scss";
+
+import { cardInfoProps } from "../../../types";
+import { DOMEN } from "../../../consts";
+import { OptionsMock } from "../../../consts";
+
 type PlaneInfoProps = {
-  id?: string;
-};
-
-const DOMEN = "http://127.0.0.1:8000/";
-
-type CardProps = {
-  id: number;
-  title: string;
-  category: string;
-  features: [];
-  description: string;
-  price: number;
-  image: string;
+  id: string;
 };
 
 const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
-  const [info, setInfo] = useState<CardProps>({
+  const [info, setInfo] = useState<cardInfoProps | undefined>({
     id: 0,
     title: "",
     category: "",
     description: "",
     price: 0,
-    features: [],
+    available: true,
+    features: [""],
     image: "",
   });
 
@@ -39,10 +32,12 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
         const option = data;
         console.log(option);
         setInfo(option);
-        console.log(info.image.replace("minio://", ""));
-        console.log(info.title);
       })
       .catch((error) => {
+        let filteredGroups: cardInfoProps | undefined = OptionsMock.find(
+          (group) => group.id == parseInt(id)
+        );
+        setInfo(filteredGroups);
         console.log("Ошибка при выполнении запроса:", error);
       });
   }, []);
@@ -50,7 +45,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
   return (
     <div className={styles.planeinfo}>
       <div className={styles.planeinfo__image}>
-        {info.image ? (
+        {info && info.image ? (
           <img
             className={styles.planeinfo__image_img}
             src={info.image}
@@ -67,7 +62,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
       <div className={styles.planeinfo__common}>
         <div className={styles.planeinfo__common_text}>
           <div className={styles.planeinfo__common_title}>
-            {info.title.replace("minio://", "")}
+            {info && info.title.replace("minio://", "")}
           </div>
           <div className={styles.planeinfo__common_subtitle}>
             {" "}
@@ -78,7 +73,9 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
           </div>
         </div>
         <div className={styles.planeinfo__common_actions}>
-          <div className={styles.planeinfo__common_price}>{info.price} ₽</div>
+          <div className={styles.planeinfo__common_price}>
+            {info && info.price} ₽
+          </div>
           <Button>В корзину</Button>
         </div>
       </div>
