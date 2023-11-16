@@ -14,6 +14,7 @@ type PlaneInfoProps = {
 };
 
 const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
+  const [mock, setMock] = useState(false);
   const [info, setInfo] = useState<cardInfoProps | undefined>({
     id: 0,
     title: "",
@@ -34,6 +35,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
         setInfo(option);
       })
       .catch((error) => {
+        setMock(true);
         let filteredGroups: cardInfoProps | undefined = OptionsMock.find(
           (group) => group.id == parseInt(id)
         );
@@ -48,7 +50,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
         {info && info.image ? (
           <img
             className={styles.planeinfo__image_img}
-            src={info.image}
+            src={mock ? `../${info.image}` : info.image}
             alt="sssss"
           ></img>
         ) : (
@@ -70,7 +72,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
         </div>
         <div className={styles.planeinfo__common_actions}>
           <div className={styles.planeinfo__common_price}>
-            {info && info.price} ₽
+            {info && info.price} $
           </div>
           <Button>В корзину</Button>
         </div>

@@ -57,31 +57,29 @@ const MainPage = () => {
   }, [searchValue, sliderValues, categoryValue]);
 
   const createMock = () => {
-    let filteredGroups: cardInfoProps[] = OptionsMock.filter(
-      (group) => group.available == true
+    let filteredOptions: cardInfoProps[] = OptionsMock.filter(
+      (option) => option.available == true
     );
 
     if (searchValue) {
-      filteredGroups = filteredGroups.filter((group) =>
-        group.title.includes(searchValue)
+      filteredOptions = filteredOptions.filter((option) =>
+        option.title.includes(searchValue)
       );
     }
 
     if (sliderValues) {
-      filteredGroups = filteredGroups.filter(
-        (group) =>
-          group.price > sliderValues[0] && group.price < sliderValues[1]
+      filteredOptions = filteredOptions.filter(
+        (option) =>
+          option.price > sliderValues[0] && option.price < sliderValues[1]
       );
     }
 
     if (categoryValue != "Любая категория") {
-      filteredGroups = filteredGroups.filter(
-        (group) => group.category == categoryValue
+      filteredOptions = filteredOptions.filter(
+        (option) => option.category == categoryValue
       );
     }
-    console.log(filteredGroups);
-
-    setItems(filteredGroups);
+    setItems(filteredOptions);
   };
 
   return (
@@ -103,7 +101,7 @@ const MainPage = () => {
               onChangeValues={handleSliderChange}
               minimum={0}
               maximum={10000}
-              title="Price Range"
+              title="Цена"
             />
           </div>
         </div>
@@ -113,7 +111,7 @@ const MainPage = () => {
             ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
             : items.map((item: cardInfoProps) => (
                 <Link
-                  to={`/planes/${item.id}`}
+                  to={`/planesDevelopment_frontend/${item.id}`}
                   key={item.id}
                   style={{ textDecoration: "none", color: "black" }}
                 >

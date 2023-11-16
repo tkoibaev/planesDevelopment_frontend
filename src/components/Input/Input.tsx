@@ -35,7 +35,7 @@ const Input: React.FC<InputProps> = ({ onChangeValue }) => {
           onChange={onChangeInput}
           className={styles.input__block}
           type="text"
-          placeholder="Input"
+          placeholder="Начните поиск..."
         ></input>
       </form>
     </div>
