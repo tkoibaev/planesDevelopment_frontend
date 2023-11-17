@@ -6,6 +6,7 @@ import PlanePage from "./pages/PlanePage/PlanePage";
 import Breadcrumps from "./components/Breadcrumps/Breadcrumps";
 import RegPage from "./pages/RegPage/RegPage";
 import AuthPage from "./pages/AuthPage/AuthPage";
+import ApplicationsHistoryTable from "./components/ApplicationsHistoryTable/ApplicationsHistoryTable";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
           element={<RegPage />}
         />
         <Route path="/planesDevelopment_frontend/auth" element={<AuthPage />} />
+        <Route
+          path="/planesDevelopment_frontend/history"
+          element={<ApplicationsHistoryTable />}
+        />
       </Routes>
     </>
   );

@@ -1,6 +1,6 @@
 import cartSvg from "../../assets/icons/bag-2.svg";
 import userSvg from "../../assets/icons/user.svg";
-import hisSvg from "../../assets/icons/history.svg";
+import hisSvg from "../../assets/icons/user.svg";
 
 import styles from "./header.module.scss";
 import { Link } from "react-router-dom";
