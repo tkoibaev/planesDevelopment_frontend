@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios";
+
 export default interface Option {
   id: number;
   name: string;
@@ -13,3 +15,5 @@ export type cardInfoProps = {
   price: number;
   image: string;
 };
+
+export type Response = Promise<AxiosResponse> | any;

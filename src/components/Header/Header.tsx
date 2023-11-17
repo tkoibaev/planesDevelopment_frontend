@@ -1,5 +1,7 @@
 import cartSvg from "../../assets/icons/bag-2.svg";
 import userSvg from "../../assets/icons/user.svg";
+import hisSvg from "../../assets/icons/history.svg";
+
 import styles from "./header.module.scss";
 import { Link } from "react-router-dom";
 
@@ -14,6 +16,9 @@ const Header = () => {
         </div>
 
         <div className={styles.header__profile}>
+          <div className={styles.cart}>
+            <img src={hisSvg} alt="History" />
+          </div>
           <div className={styles.cart}>
             <img src={cartSvg} alt="Cart" />
           </div>
