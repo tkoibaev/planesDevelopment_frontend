@@ -6,8 +6,13 @@ import styles from "./AuthForm.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import axios from "axios";
+
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../store/userSlice";
+
 const cookies = new Cookies();
 const AuthForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const login = async (formData: FormData) => {
@@ -19,33 +24,23 @@ const AuthForm = () => {
         },
         data: formData as FormData,
       });
-      cookies.set("access_token", response.data["access_token"], {
+      cookies.set("access_token", response.data["session_id"], {
         path: "/",
         expires: new Date(Date.now() + 25920000),
       });
-      console.log(response);
-      console.log(response.headers);
-      // console.log(response.headers['set-cookies'])
 
-      // setAccessToken(response.data['access_token'])
-      // setRefreshToken(response.data['refresh_token'])
-
-      // const permissions = {
-      // 	is_authenticated: true,
-      // 	is_moderator: response.data["is_moderator"],
-      // 	user_id: response.data["user_id"],
-      // 	user_name: response.data["name"],
-      // 	user_email: response.data["email"]
-      // }
-
-      // setUser(permissions)
+      const permissions = {
+        is_authenticated: true,
+        is_moderator: response.data["is_moderator"],
+        user_id: response.data["user_id"],
+        user_email: response.data["email"],
+      };
+      console.log(permissions);
+      dispatch(updateUser(permissions));
 
       navigate("/planesDevelopment_frontend");
-
-      // successMessage(response.data["name"])
     } catch {
       console.log("kaka");
-      // errorMessage()
     }
   };
 

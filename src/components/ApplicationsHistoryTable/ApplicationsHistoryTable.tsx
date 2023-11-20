@@ -14,6 +14,7 @@ const ApplicationsHistoryTable = () => {
   const fetchAppsData = async () => {
     try {
       console.log(cookies.get("access_token"));
+      console.log(cookies.get("session_id"));
       axios.defaults.withCredentials = true;
       const response: Response = await axios(
         `http://127.0.0.1:8000/applications/`,
@@ -27,7 +28,6 @@ const ApplicationsHistoryTable = () => {
           },
         }
       );
-
       if (response.status == 200) {
         setApplication(response.data);
       }

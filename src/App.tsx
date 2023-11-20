@@ -7,30 +7,40 @@ import Breadcrumps from "./components/Breadcrumps/Breadcrumps";
 import RegPage from "./pages/RegPage/RegPage";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import ApplicationsHistoryTable from "./components/ApplicationsHistoryTable/ApplicationsHistoryTable";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store from "./store/store";
 
 function App() {
   return (
     <>
-      <Header />
-      <Breadcrumps />
-      <Routes>
-        <Route
-          path="/"
-          element={<Navigate to="/planesDevelopment_frontend" replace />}
-        />
-        <Route path="/planesDevelopment_frontend" element={<MainPage />} />
-        {/* <Route path="/planes" element={<PlanePage />} /> */}
-        <Route path="/planesDevelopment_frontend/:id" element={<PlanePage />} />
-        <Route
-          path="/planesDevelopment_frontend/registration"
-          element={<RegPage />}
-        />
-        <Route path="/planesDevelopment_frontend/auth" element={<AuthPage />} />
-        <Route
-          path="/planesDevelopment_frontend/history"
-          element={<ApplicationsHistoryTable />}
-        />
-      </Routes>
+      <Provider store={store}>
+        <Header />
+        <Breadcrumps />
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate to="/planesDevelopment_frontend/" replace />}
+          />
+          <Route path="/planesDevelopment_frontend/" element={<MainPage />} />
+          {/* <Route path="/planes" element={<PlanePage />} /> */}
+          <Route
+            path="/planesDevelopment_frontend/:id"
+            element={<PlanePage />}
+          />
+          <Route
+            path="/planesDevelopment_frontend/registration"
+            element={<RegPage />}
+          />
+          <Route
+            path="/planesDevelopment_frontend/auth"
+            element={<AuthPage />}
+          />
+          <Route
+            path="/planesDevelopment_frontend/history"
+            element={<ApplicationsHistoryTable />}
+          />
+        </Routes>
+      </Provider>
     </>
   );
 }
