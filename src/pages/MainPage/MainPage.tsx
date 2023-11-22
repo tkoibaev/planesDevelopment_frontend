@@ -9,9 +9,10 @@ import SliderFilter from "../../components/Slider/Slider";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Skeleton from "../../components/Skeleton/Skeleton";
-
+import { RootState } from "../../store/store";
 import styles from "./mainpage.module.scss";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setInputValue } from "../../store/filtersSlices";
 import Option from "../../types";
 import { cardInfoProps } from "../../types";
 import { DOMEN, CATEGORIES } from "../../consts";
@@ -19,29 +20,29 @@ import { OptionsMock } from "../../consts";
 
 const MainPage = () => {
   const [items, setItems] = useState<cardInfoProps[]>([]);
-
   const [isLoading, setIsLoading] = useState(true);
-  const [searchValue, setSearchValue] = useState("");
-  const [sliderValues, setSliderValues] = useState([0, 10000]);
-  const [categoryValue, setCategoryValue] = useState("Любая категория");
+  //!!!!!!!!!!!!!!!!!1
 
-  const handleSliderChange = (values: number[]) => {
-    setSliderValues(values);
-  };
-
-  const handleDropDownChange = (selectedOption: Option) => {
-    setCategoryValue(selectedOption.name);
-  };
+  const dispatch = useDispatch();
+  const searchValue = useSelector(
+    (state: RootState) => state.filter.input_value
+  );
+  const categoryValue = useSelector(
+    (state: RootState) => state.filter.dropdown_value.name
+  );
+  const sliderValue = useSelector(
+    (state: RootState) => state.filter.price_range
+  );
 
   useEffect(() => {
     const params = searchValue
       ? `?search=${encodeURIComponent(searchValue)}&min_price=${
-          sliderValues[0]
-        }&max_price=${sliderValues[1]}&category=${encodeURIComponent(
+          sliderValue[0]
+        }&max_price=${sliderValue[1]}&category=${encodeURIComponent(
           categoryValue
         )}`
-      : `?min_price=${sliderValues[0]}&max_price=${
-          sliderValues[1]
+      : `?min_price=${sliderValue[0]}&max_price=${
+          sliderValue[1]
         }&category=${encodeURIComponent(categoryValue)}`;
     fetch(`${DOMEN}/options/${params}`) //!!!!!!!!!!!!!!!
       .then((response) => response.json())
@@ -54,7 +55,7 @@ const MainPage = () => {
         createMock();
         setIsLoading(false);
       });
-  }, [searchValue, sliderValues, categoryValue]);
+  }, [searchValue, sliderValue, categoryValue]);
 
   const createMock = () => {
     let filteredOptions: cardInfoProps[] = OptionsMock.filter(
@@ -67,10 +68,10 @@ const MainPage = () => {
       );
     }
 
-    if (sliderValues) {
+    if (sliderValue) {
       filteredOptions = filteredOptions.filter(
         (option) =>
-          option.price > sliderValues[0] && option.price < sliderValues[1]
+          option.price > sliderValue[0] && option.price < sliderValue[1]
       );
     }
 
@@ -88,17 +89,13 @@ const MainPage = () => {
         <InfoBlock />
         <div className={styles.mainpage__actions}>
           <div className={styles.mainpage__input}>
-            <Input onChangeValue={(i) => setSearchValue(i)} />
+            <Input onChangeValue={(i) => dispatch(setInputValue(i))} />
             <Button>Поиск</Button>
           </div>
           <div className={styles.mainpage__filters}>
-            <DropDown
-              onChangeValue={handleDropDownChange}
-              options={CATEGORIES}
-              defaultTitle="Категория опции"
-            />
+            <DropDown options={CATEGORIES} title={categoryValue} />
             <SliderFilter
-              onChangeValues={handleSliderChange}
+              value={sliderValue}
               minimum={0}
               maximum={10000}
               title="Цена"

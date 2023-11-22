@@ -1,34 +1,34 @@
 import React, { useCallback } from "react";
-import { useState } from "react";
 import Slider from "react-slider";
 import debounce from "lodash.debounce";
+import { setSliderValue } from "../../store/filtersSlices";
 
 import "./slider.css";
+import { useDispatch } from "react-redux";
 
 export type SliderProps = {
   minimum: number;
   maximum: number;
   title?: string;
-  onChangeValues: (values: number[]) => void;
+  value: number[];
 };
 
 const SliderFilter: React.FC<SliderProps> = ({
   minimum,
   maximum,
   title,
-  onChangeValues,
+  value,
 }) => {
-  const [values, setValues] = useState([minimum, maximum]);
+  const dispatch = useDispatch();
 
   const onUpdateValues = useCallback(
     debounce((newValues) => {
-      onChangeValues(newValues);
-    }, 1000),
+      dispatch(setSliderValue(newValues));
+    }, 300),
     []
-  );
+  ); //та же история что и с инпутом, надо дебаунсить запрос, но стор обновлять сразу( пока ставлю 1000, чтобы не убить бэк)
 
   const handleSliderChange = (newValues: number[]) => {
-    setValues(newValues);
     onUpdateValues(newValues);
   };
 
@@ -36,12 +36,12 @@ const SliderFilter: React.FC<SliderProps> = ({
     <div className="filter">
       <div className="filter__title">{title}</div>
       <div className="filter__range">
-        ${values[0]} - ${values[1]}
+        ${value[0]} - ${value[1]}
       </div>
       <Slider
         className="filter__slider"
         onChange={handleSliderChange}
-        value={values}
+        value={value}
         min={minimum}
         max={maximum}
       />

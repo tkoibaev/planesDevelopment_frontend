@@ -1,32 +1,29 @@
 import { Dropdown } from "react-bootstrap";
-
+import { useDispatch } from "react-redux";
 import styles from "./dropdown.module.scss";
-import { useState } from "react";
-
+import {
+  setDropdownValueId,
+  setDropdownValueName,
+} from "../../store/filtersSlices";
 import Option from "../../types";
 
 export type DropDownProps = {
   options: Option[];
-  defaultTitle: string;
-  onChangeValue: (selectedOption: Option) => void; // Добавленный проп
+  title: string;
 };
 
-const DropDown: React.FC<DropDownProps> = ({
-  options,
-  defaultTitle,
-  onChangeValue,
-}) => {
-  const [title, setTitle] = useState<Option>(options[0]);
+const DropDown: React.FC<DropDownProps> = ({ options, title }) => {
+  const dispatch = useDispatch();
 
   const handleSelect = (selectedOption: Option) => {
-    setTitle(selectedOption);
-    onChangeValue(selectedOption);
+    dispatch(setDropdownValueName(selectedOption.name));
+    dispatch(setDropdownValueId(selectedOption.id));
   };
 
   return (
     <Dropdown className={styles.dropdown}>
       <Dropdown.Toggle className={styles.dropdown__toggle}>
-        {title ? title.name : defaultTitle}
+        {title}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className={styles.dropdown__menu}>

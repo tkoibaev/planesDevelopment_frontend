@@ -28,7 +28,6 @@ const AuthForm = () => {
         path: "/",
         expires: new Date(Date.now() + 25920000),
       });
-
       const permissions = {
         is_authenticated: true,
         is_moderator: response.data["is_moderator"],
