@@ -37,7 +37,7 @@ const AuthForm = () => {
       console.log(permissions);
       dispatch(updateUser(permissions));
 
-      navigate("/planesDevelopment_frontend");
+      navigate("/planesDevelopment_frontend/");
     } catch {
       console.log("kaka");
     }

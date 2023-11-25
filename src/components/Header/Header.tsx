@@ -1,6 +1,6 @@
 import cartSvg from "../../assets/icons/bag-2.svg";
 import userSvg from "../../assets/icons/user.svg";
-import hisSvg from "../../assets/icons/history.svg";
+import hisSvg from "../../assets/icons/history2.svg";
 
 import { useState } from "react";
 
@@ -22,15 +22,17 @@ const Header = () => {
         </div>
 
         <div className={styles.header__profile}>
-          <Link style={{ height: 30 }} to="/planesDevelopment_frontend/history">
+          <Link style={{ height: 27 }} to="/planesDevelopment_frontend/history">
             <div className={styles.cart}>
-              <img style={{ width: 30 }} src={hisSvg} alt="History" />
+              <img style={{ width: 27 }} src={hisSvg} alt="History" />
+            </div>
+          </Link>
+          <Link to="/planesDevelopment_frontend/cart">
+            <div className={styles.cart}>
+              <img src={cartSvg} alt="Cart" />
             </div>
           </Link>
 
-          <div className={styles.cart}>
-            <img src={cartSvg} alt="Cart" />
-          </div>
           <div
             className={styles.user}
             onClick={() => {

@@ -8,12 +8,16 @@ const initialState = {
     id: 0,
     name: "Любая категория",
   },
+  options: [],
 };
 
 const filterSlice = createSlice({
   name: "filters",
   initialState: initialState,
   reducers: {
+    setOptions(state, action) {
+      state.options = action.payload;
+    },
     setInputValue(state, action) {
       state.input_value = action.payload;
     },
@@ -34,5 +38,6 @@ export const {
   setDropdownValueId,
   setDropdownValueName,
   setInputValue,
+  setOptions,
 } = filterSlice.actions;
 export default filterSlice.reducer;

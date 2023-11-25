@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import Option from "../types";
+import Option, { optionData } from "../types";
 import userReducer from "./userSlice";
 import filterReducer from "./filtersSlices";
 
@@ -9,11 +9,13 @@ export interface RootState {
     user_email: string;
     is_authenticated: boolean;
     is_moderator: boolean;
+    current_cart: number;
   };
   filter: {
     price_range: number[];
     input_value: string;
     dropdown_value: Option;
+    options: optionData[];
   };
 }
 

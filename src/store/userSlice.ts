@@ -5,6 +5,7 @@ const initialState = {
   user_email: "",
   is_authenticated: false,
   is_moderator: false,
+  current_cart: -1,
 };
 
 const userSlice = createSlice({
@@ -22,10 +23,14 @@ const userSlice = createSlice({
       state.is_moderator = false;
       state.user_id = -1;
       state.user_email = "";
+      state.current_cart = -1;
+    },
+    updateCart: (state, action) => {
+      state.current_cart = action.payload;
     },
   },
 });
 
-export const { updateUser, cleanUser } = userSlice.actions;
+export const { updateUser, cleanUser, updateCart } = userSlice.actions;
 
 export default userSlice.reducer;

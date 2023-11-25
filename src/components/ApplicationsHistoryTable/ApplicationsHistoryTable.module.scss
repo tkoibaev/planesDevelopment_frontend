@@ -1,6 +1,6 @@
 .content {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   max-height: 600px;
   overflow-y: scroll;
@@ -8,7 +8,7 @@
   transform: translate(-50%, -50%);
 }
 table {
-  width: 500px;
+  width: 900px;
   height: 500px;
   border-collapse: collapse;
   overflow: hidden;
@@ -17,28 +17,18 @@ table {
 th,
 td {
   padding: 15px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #33cccc8f;
   color: #000000;
 }
 th {
   text-align: left;
 }
 thead th {
-  background-color: #55608f;
+  background-color: #33cccc;
 }
 tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #1b676777;
 }
 tbody td {
   position: relative;
-}
-tbody td:hover:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -9999px;
-  bottom: -9999px;
-  background-color: rgba(255, 255, 255, 0.2);
-  z-index: -1;
 }

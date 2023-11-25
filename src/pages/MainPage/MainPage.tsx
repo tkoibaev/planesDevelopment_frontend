@@ -17,10 +17,18 @@ import Option from "../../types";
 import { cardInfoProps } from "../../types";
 import { DOMEN, CATEGORIES } from "../../consts";
 import { OptionsMock } from "../../consts";
+import axios from "axios";
+import Cookies from "universal-cookie";
+import { updateCart } from "../../store/userSlice";
 
-const MainPage = () => {
-  const [items, setItems] = useState<cardInfoProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+const cookies = new Cookies();
+
+interface MainPageProps {
+  loading: boolean;
+}
+const MainPage: React.FC<MainPageProps> = ({ loading }) => {
+  // const [items, setItems] = useState<cardInfoProps[]>([]);
+  // const [isLoading, setIsLoading] = useState(false);
   //!!!!!!!!!!!!!!!!!1
 
   const dispatch = useDispatch();
@@ -33,55 +41,73 @@ const MainPage = () => {
   const sliderValue = useSelector(
     (state: RootState) => state.filter.price_range
   );
+  const options = useSelector((state: RootState) => state.filter.options);
 
-  useEffect(() => {
-    const params = searchValue
-      ? `?search=${encodeURIComponent(searchValue)}&min_price=${
-          sliderValue[0]
-        }&max_price=${sliderValue[1]}&category=${encodeURIComponent(
-          categoryValue
-        )}`
-      : `?min_price=${sliderValue[0]}&max_price=${
-          sliderValue[1]
-        }&category=${encodeURIComponent(categoryValue)}`;
-    fetch(`${DOMEN}/options/${params}`) //!!!!!!!!!!!!!!!
-      .then((response) => response.json())
-      .then((data) => {
-        const options = data.options;
-        setItems(options);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        createMock();
-        setIsLoading(false);
-      });
-  }, [searchValue, sliderValue, categoryValue]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const params = searchValue
+  //         ? `?search=${encodeURIComponent(searchValue)}&min_price=${
+  //             sliderValue[0]
+  //           }&max_price=${sliderValue[1]}&category=${encodeURIComponent(
+  //             categoryValue
+  //           )}`
+  //         : `?min_price=${sliderValue[0]}&max_price=${
+  //             sliderValue[1]
+  //           }&category=${encodeURIComponent(categoryValue)}`;
 
-  const createMock = () => {
-    let filteredOptions: cardInfoProps[] = OptionsMock.filter(
-      (option) => option.available == true
-    );
+  //       const response = await axios(
+  //         `http://127.0.0.1:8000/options/${params}`,
+  //         {
+  //           method: "GET",
+  //           withCredentials: true,
+  //           headers: {
+  //             "Content-type": "application/json; charset=UTF-8",
+  //             Authorization: `Bearer ${cookies.get("access_token")}`,
+  //           },
+  //         }
+  //       );
+  //       console.log(response.data);
+  //       const options = response.data.options;
+  //       if (response.data.app_id) {
+  //         dispatch(updateCart(response.data.app_id));
+  //       }
+  //       setItems(options);
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       createMock();
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    if (searchValue) {
-      filteredOptions = filteredOptions.filter((option) =>
-        option.title.includes(searchValue)
-      );
-    }
+  //   fetchData();
+  // }, [searchValue, sliderValue, categoryValue]);
 
-    if (sliderValue) {
-      filteredOptions = filteredOptions.filter(
-        (option) =>
-          option.price > sliderValue[0] && option.price < sliderValue[1]
-      );
-    }
+  // const createMock = () => {
+  //   let filteredOptions: cardInfoProps[] = OptionsMock.filter(
+  //     (option) => option.available == true
+  //   );
 
-    if (categoryValue != "Любая категория") {
-      filteredOptions = filteredOptions.filter(
-        (option) => option.category == categoryValue
-      );
-    }
-    setItems(filteredOptions);
-  };
+  //   if (searchValue) {
+  //     filteredOptions = filteredOptions.filter((option) =>
+  //       option.title.includes(searchValue)
+  //     );
+  //   }
+
+  //   if (sliderValue) {
+  //     filteredOptions = filteredOptions.filter(
+  //       (option) =>
+  //         option.price > sliderValue[0] && option.price < sliderValue[1]
+  //     );
+  //   }
+
+  //   if (categoryValue != "Любая категория") {
+  //     filteredOptions = filteredOptions.filter(
+  //       (option) => option.category == categoryValue
+  //     );
+  //   }
+  //   setItems(filteredOptions);
+  // };
 
   return (
     <div className={styles.mainpage}>
@@ -104,16 +130,16 @@ const MainPage = () => {
         </div>
 
         <div className={styles.mainpage__inner}>
-          {isLoading
+          {loading
             ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-            : items.map((item: cardInfoProps) => (
-                <Link
-                  to={`/planesDevelopment_frontend/${item.id}`}
-                  key={item.id}
-                  style={{ textDecoration: "none", color: "black" }}
-                >
-                  <Card key={item.id} {...item} />
-                </Link>
+            : options.map((item: cardInfoProps) => (
+                // <Link
+                //   to={`/planesDevelopment_frontend/${item.id}`}
+                //   key={item.id}
+                //   style={{ textDecoration: "none", color: "black" }}
+                // >
+                <Card key={item.id} {...item} />
+                //</Link>
               ))}
         </div>
       </div>
