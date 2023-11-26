@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useTable, Column } from "react-table";
 import axios from "axios";
 import { Response } from "../../types";
+import moment from "moment";
 
 import styles from "./ApplicationsHistoryTable.module.scss";
 import Cookies from "universal-cookie";
+import { Link } from "react-router-dom";
 
 const cookies = new Cookies();
 
@@ -15,7 +17,7 @@ const ApplicationsHistoryTable = () => {
     try {
       axios.defaults.withCredentials = true;
       const response: Response = await axios(
-        `http://127.0.0.1:8000/applications/`,
+        `http://localhost:8000/applications/`,
         {
           method: "GET",
           //   credentials: 'include',
@@ -38,7 +40,7 @@ const ApplicationsHistoryTable = () => {
     fetchAppsData();
   }, []);
 
-  const data = React.useMemo(() => application, []);
+  const data = application;
   const columns: Array<Column<{}>> = React.useMemo(
     () => [
       {
@@ -46,20 +48,58 @@ const ApplicationsHistoryTable = () => {
         accessor: "id",
       },
       {
-        Header: "status",
+        Header: "Статус",
         accessor: "status",
+        Cell: ({ value }) => {
+          let statusText = "";
+          switch (value) {
+            case 1:
+              statusText = "Черновик";
+              break;
+            case 2:
+              statusText = "Удален";
+              break;
+            case 3:
+              statusText = "Сформирован";
+              break;
+            case 4:
+              statusText = "Завершен";
+              break;
+            case 5:
+              statusText = "Отклонен";
+              break;
+            default:
+              statusText = "";
+          }
+          return <span>{statusText}</span>;
+        },
       },
       {
-        Header: "created_at",
+        Header: "Дата создания",
         accessor: "created_at",
+        Cell: ({ value }) => (
+          <span>
+            {value ? moment(value).format("DD.MM.YYYY HH:mm:ss") : "пока пусто"}
+          </span>
+        ),
       },
       {
-        Header: "formed_at",
+        Header: "Дата формирования",
         accessor: "formed_at",
+        Cell: ({ value }) => (
+          <span>
+            {value ? moment(value).format("DD.MM.YYYY HH:mm:ss") : "пока пусто"}
+          </span>
+        ),
       },
       {
-        Header: "completed_at",
+        Header: "Дата завершения",
         accessor: "completed_at",
+        Cell: ({ value }) => (
+          <span>
+            {value ? moment(value).format("DD.MM.YYYY HH:mm:ss") : "пока пусто"}
+          </span>
+        ),
       },
     ],
     []

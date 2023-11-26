@@ -49,20 +49,46 @@ const Cart = () => {
       };
 
       const response: Response = await axios(
-        `http://127.0.0.1:8000/applications/${cartApplication}/update_by_user/`,
+        `http://localhost:8000/applications/${cartApplication}/update_by_user/`,
         {
           method: "PUT",
           data: updatedData,
-
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            Authorization: `Bearer ${cookies.get("access_token")}`,
-          },
+          withCredentials: false,
+          // headers: {
+          //   "Content-type": "application/json; charset=UTF-8",
+          //   Authorization: `Bearer ${cookies.get("access_token")}`,
+          // },
         }
       );
 
       dispatch(updateCart(-1));
       navigate("/planesDevelopment_frontend/");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const deleteItem = async (itemId: number) => {
+    try {
+      await axios(
+        `http://localhost:8000/applications/${cartApplication}/delete_option/${itemId}/`,
+        {
+          method: "DELETE",
+          // withCredentials: true,
+          // headers: {
+          //   "Content-type": "application/json; charset=UTF-8",
+          //   Authorization: `Bearer ${cookies.get("access_token")}`,
+          // },
+        }
+      );
+
+      // Update the cart in the Redux store
+      // dispatch(updateCart(-1));
+
+      // Remove the deleted item from the cartItems state
+      setCartItems((prevCartItems) =>
+        prevCartItems.filter((item) => item.id !== itemId)
+      );
     } catch (e) {
       console.log(e);
     }
@@ -85,7 +111,7 @@ const Cart = () => {
       </div>
       <div className={styles.cart__content}>
         {cartItems.map((option) => (
-          <CartItem key={option.id} {...option} />
+          <CartItem key={option.id} {...option} onDelete={deleteItem} />
         ))}
       </div>
       <div className={styles.cart__actions}>

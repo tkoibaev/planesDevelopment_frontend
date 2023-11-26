@@ -78,31 +78,7 @@
       align-items: center;
       justify-content: flex-end;
       width: 4%;
-
-      .button {
-        border-color: #8d8d8d;
-      }
-
-      svg {
-        transform: rotate(45deg);
-
-        path {
-          fill: #8d8d8d;
-        }
-      }
-
-      .button {
-        svg {
-          width: 11.5px;
-          height: 11.5px;
-          position: relative;
-        }
-        &:hover,
-        &:active {
-          border-color: #8d8d8d;
-          background-color: #8d8d8d;
-        }
-      }
+      cursor: pointer;
     }
   }
 }

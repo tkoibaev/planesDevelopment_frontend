@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500&display=swap");
-
+/* :root {
+  --toastify-color-light: red;
+} */
 body {
   font-family: "Nunito", sans-serif;
   margin: 0;
@@ -15,3 +17,17 @@ button {
 input {
   all: unset;
 }
+/* Для самого окошка */
+.Toastify__toast {
+  color: black;
+  background-color: aqua;
+}
+/* Для ползунка */
+.Toastify__progress-bar {
+  background-color: black;
+}
+/* Иконку передовать и стилизовать уже при вызове 
+toast.success("You can provide any string", {
+  icon: "🚀",
+});
+*/

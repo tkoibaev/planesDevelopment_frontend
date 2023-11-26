@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import { MouseEventHandler } from "react";
 
 export default interface Option {
   id: number;
@@ -37,6 +38,7 @@ export type cartItemProps = {
   price: number;
   image: string;
   amount: number;
+  onDelete: (id: number) => void;
 };
 
 export type Response = Promise<AxiosResponse> | any;

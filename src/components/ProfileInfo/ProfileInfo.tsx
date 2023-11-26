@@ -8,6 +8,7 @@ import Button from "../Button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { cleanUser, updateUser } from "../../store/userSlice";
+import { toast } from "react-toastify";
 
 const cookies = new Cookies();
 const ProfileInfo = () => {
@@ -15,14 +16,18 @@ const ProfileInfo = () => {
   const navigate = useNavigate();
   const logout = async () => {
     try {
-      const response: Response = await axios(`http://127.0.0.1:8000/logout/`, {
+      const response: Response = await axios(`http://localhost:8000/logout/`, {
         method: "POST",
+        withCredentials: true,
         headers: {
           Authorization: `Bearer ${cookies.get("access_token")}`,
         },
       });
       cookies.remove("access_token", { path: "/" });
       dispatch(cleanUser());
+      toast.success("Выход выполнен успешно", {
+        icon: "🚀",
+      });
 
       navigate("/planesDevelopment_frontend");
     } catch {

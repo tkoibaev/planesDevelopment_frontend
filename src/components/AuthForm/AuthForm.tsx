@@ -9,6 +9,7 @@ import axios from "axios";
 
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../store/userSlice";
+import { toast } from "react-toastify";
 
 const cookies = new Cookies();
 const AuthForm = () => {
@@ -36,10 +37,14 @@ const AuthForm = () => {
       };
       console.log(permissions);
       dispatch(updateUser(permissions));
-
+      toast.success("Вы успешно авторизовались", {
+        icon: "🚀",
+      });
       navigate("/planesDevelopment_frontend/");
     } catch {
-      console.log("kaka");
+      toast.error("Проверьте введенные данных", {
+        icon: "😕",
+      });
     }
   };
 

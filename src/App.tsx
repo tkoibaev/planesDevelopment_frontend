@@ -20,9 +20,12 @@ import ApplicationsHistoryPage from "./pages/ApplicationsHistoryPage/Application
 import { RootState } from "./store/store";
 import { setOptions } from "./store/filtersSlices";
 import { OptionsMock } from "./consts";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const cookies = new Cookies();
 function App() {
+  const url = window.location.pathname.split("/").pop();
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const searchValue = useSelector(
@@ -38,7 +41,7 @@ function App() {
   const login = async () => {
     try {
       const response: Response = await axios.get(
-        "http://127.0.0.1:8000/user_info/",
+        "http://localhost:8000/user_info/",
         {
           withCredentials: true,
           headers: {
@@ -59,6 +62,7 @@ function App() {
       console.log("Пользоатель не авторизован!!!");
     }
   };
+
   const fetchData = async () => {
     try {
       const params = searchValue
@@ -88,7 +92,7 @@ function App() {
       setIsLoading(false);
     } catch (error) {
       createMock();
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -98,8 +102,11 @@ function App() {
     }
   });
   React.useEffect(() => {
-    fetchData();
-  }, [searchValue, sliderValue, categoryValue]);
+    console.log("fetch");
+    setTimeout(() => {
+      fetchData();
+    }, 100);
+  });
 
   const createMock = () => {
     let filteredOptions: cardInfoProps[] = OptionsMock.filter(
@@ -139,7 +146,6 @@ function App() {
           path="/planesDevelopment_frontend/"
           element={<MainPage loading={isLoading} />}
         />
-        {/* <Route path="/planes" element={<PlanePage />} /> */}
         <Route path="/planesDevelopment_frontend/:id" element={<PlanePage />} />
         <Route
           path="/planesDevelopment_frontend/registration"
@@ -152,6 +158,7 @@ function App() {
         />
         <Route path="/planesDevelopment_frontend/cart" element={<CartPage />} />
       </Routes>
+      <ToastContainer autoClose={1000} pauseOnHover={false} />
     </>
   );
 }
