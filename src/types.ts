@@ -18,6 +18,7 @@ export interface optionData {
 }
 
 export type cardInfoProps = {
+  // children: React.ReactNode; //!!!!!!!!!!!!
   id: number;
   title: string;
   category: string;
@@ -26,6 +27,7 @@ export type cardInfoProps = {
   available: boolean;
   price: number;
   image: string;
+  onAddClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export type cartItemProps = {
@@ -38,6 +40,7 @@ export type cartItemProps = {
   price: number;
   image: string;
   amount: number;
+  updateAllow: boolean;
   onDelete: (id: number) => void;
 };
 

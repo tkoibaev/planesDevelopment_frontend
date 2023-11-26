@@ -7,6 +7,7 @@ import moment from "moment";
 import styles from "./ApplicationsHistoryTable.module.scss";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
+import Button from "../Button/Button";
 
 const cookies = new Cookies();
 
@@ -44,7 +45,7 @@ const ApplicationsHistoryTable = () => {
   const columns: Array<Column<{}>> = React.useMemo(
     () => [
       {
-        Header: "Номер заказа",
+        Header: "№",
         accessor: "id",
       },
       {
@@ -60,7 +61,7 @@ const ApplicationsHistoryTable = () => {
               statusText = "Удален";
               break;
             case 3:
-              statusText = "Сформирован";
+              statusText = "В работе";
               break;
             case 4:
               statusText = "Завершен";
@@ -79,7 +80,7 @@ const ApplicationsHistoryTable = () => {
         accessor: "created_at",
         Cell: ({ value }) => (
           <span>
-            {value ? moment(value).format("DD.MM.YYYY HH:mm:ss") : "пока пусто"}
+            {value ? moment(value).format("DD.MM.YYYY HH:mm") : "пока пусто"}
           </span>
         ),
       },
@@ -88,7 +89,7 @@ const ApplicationsHistoryTable = () => {
         accessor: "formed_at",
         Cell: ({ value }) => (
           <span>
-            {value ? moment(value).format("DD.MM.YYYY HH:mm:ss") : "пока пусто"}
+            {value ? moment(value).format("DD.MM.YYYY HH:mm") : "пока пусто"}
           </span>
         ),
       },
@@ -97,8 +98,23 @@ const ApplicationsHistoryTable = () => {
         accessor: "completed_at",
         Cell: ({ value }) => (
           <span>
-            {value ? moment(value).format("DD.MM.YYYY HH:mm:ss") : "пока пусто"}
+            {value ? moment(value).format("DD.MM.YYYY HH:mm") : "пока пусто"}
           </span>
+        ),
+      },
+      {
+        Header: "Действие",
+        Cell: ({ cell }) => (
+          <Link
+            style={{
+              textDecoration: "underline",
+              color: "black",
+            }}
+            to={`/planesDevelopment_frontend/application/${cell.row.values.id}`}
+          >
+            Подробнее&gt;
+          </Link>
+          // <Button onClick={() => console.log("aaa")}>Открыть</Button>
         ),
       },
     ],

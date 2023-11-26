@@ -25,7 +25,8 @@ const AuthForm = () => {
         },
         data: formData as FormData,
       });
-      cookies.set("access_token", response.data["session_id"], {
+      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      cookies.set("access_token", response.data["access_token"], {
         path: "/",
         expires: new Date(Date.now() + 25920000),
       });
@@ -34,6 +35,7 @@ const AuthForm = () => {
         is_moderator: response.data["is_moderator"],
         user_id: response.data["user_id"],
         user_email: response.data["email"],
+        current_cart: response.data["current_cart"],
       };
       console.log(permissions);
       dispatch(updateUser(permissions));

@@ -17,6 +17,7 @@ const userSlice = createSlice({
       state.is_moderator = action.payload.is_moderator;
       state.user_id = action.payload.user_id;
       state.user_email = action.payload.user_email;
+      state.current_cart = action.payload.current_cart;
     },
     cleanUser: (state) => {
       state.is_authenticated = false;

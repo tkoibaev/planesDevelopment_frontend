@@ -19,6 +19,7 @@ const CartItem: React.FC<cartItemProps> = ({
   image,
   amount,
   onDelete,
+  updateAllow,
 }) => {
   const handleItemRemove = () => {
     console.log("aaaaaaaaaaaaaa");
@@ -35,20 +36,27 @@ const CartItem: React.FC<cartItemProps> = ({
         <p>{category}</p>
       </div>
       <div className={styles["cart__item-count"]}>
-        <button>
-          <img src={btnMinus}></img>
-        </button>
-        <b>{amount}</b>
-        <button>
-          <img src={btnPlus}></img>
-        </button>
+        {updateAllow && (
+          <button>
+            <img src={btnMinus}></img>
+          </button>
+        )}
+        {updateAllow ? <b>{amount}</b> : <b>Кол-во: {amount}</b>}
+
+        {updateAllow && (
+          <button>
+            <img src={btnPlus}></img>
+          </button>
+        )}
       </div>
       <div className={styles["cart__item-price"]}>
         <b>{price} $</b>
       </div>
-      <div onClick={handleItemRemove} className={styles["cart__item-remove"]}>
-        <img src={btnDel}></img>
-      </div>
+      {updateAllow && (
+        <div onClick={handleItemRemove} className={styles["cart__item-remove"]}>
+          <img src={btnDel}></img>
+        </div>
+      )}
     </div>
   );
 };

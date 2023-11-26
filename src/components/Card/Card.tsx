@@ -18,33 +18,11 @@ const Card: React.FC<cardInfoProps> = ({
   category,
   price,
   image,
+  onAddClick,
+  // children
 }) => {
   const dispatch = useDispatch();
-  const addOptionToApp = async (id: number) => {
-    console.log("aaa");
-    try {
-      const response: Response = await axios(
-        `http://127.0.0.1:8000/options/${id}/add_to_application/`,
-        {
-          method: "POST",
-          withCredentials: true,
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            Authorization: `Bearer ${cookies.get("access_token")}`,
-          },
-        }
-      );
-      if (response.data) {
-        dispatch(updateCart(response.data));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
-  const hadleAppAdd = () => {
-    addOptionToApp(id);
-  };
   return (
     <div className={styles.card}>
       <div className={styles.card__image}>
@@ -63,7 +41,7 @@ const Card: React.FC<cardInfoProps> = ({
         <div className={styles.card__inner_subtitle}>{category}</div>
         <div className={styles.card__inner_action}>
           <div className={styles.card__inner_action_price}>{price} $</div>
-          <Button onClick={hadleAppAdd}> В корзину</Button>
+          <Button onClick={onAddClick}> В корзину</Button>
         </div>
       </div>
     </div>

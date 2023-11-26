@@ -10,12 +10,19 @@ import { cartItemProps } from "../../types";
 
 import styles from "./Cart.module.scss";
 import Button from "../Button/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../../store/store";
 import { updateCart } from "../../store/userSlice";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState<cartItemProps[]>([]);
+  const [isCartMatched, setIsCartMatched] = useState<boolean>(true);
+  const { id } = useParams<{ id: string }>() as { id: string };
+  const currentCart = useSelector(
+    (state: RootState) => state.user.current_cart
+  );
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartApplication = useSelector(
@@ -24,17 +31,19 @@ const Cart = () => {
 
   const fetchCartData = async () => {
     try {
-      const response: Response = await axios(
-        `http://127.0.0.1:8000/applications/${cartApplication}/`,
-        {
-          method: "GET",
-          withCredentials: true,
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            Authorization: `Bearer ${cookies.get("access_token")}`,
-          },
-        }
-      );
+      const url = isCartMatched
+        ? `http://127.0.0.1:8000/applications/${cartApplication}/`
+        : `http://127.0.0.1:8000/applications/${id}/`;
+
+      const response: Response = await axios(url, {
+        method: "GET",
+        withCredentials: true,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${cookies.get("access_token")}`,
+        },
+      });
+
       console.log(response.data);
       setCartItems(response.data.options);
     } catch (e) {
@@ -63,6 +72,9 @@ const Cart = () => {
 
       dispatch(updateCart(-1));
       navigate("/planesDevelopment_frontend/");
+      toast.success("Заказ оформлен", {
+        icon: "🚀",
+      });
     } catch (e) {
       console.log(e);
     }
@@ -70,7 +82,7 @@ const Cart = () => {
 
   const deleteItem = async (itemId: number) => {
     try {
-      await axios(
+      const responce = await axios(
         `http://localhost:8000/applications/${cartApplication}/delete_option/${itemId}/`,
         {
           method: "DELETE",
@@ -81,11 +93,7 @@ const Cart = () => {
           // },
         }
       );
-
-      // Update the cart in the Redux store
-      // dispatch(updateCart(-1));
-
-      // Remove the deleted item from the cartItems state
+      console.log(responce);
       setCartItems((prevCartItems) =>
         prevCartItems.filter((item) => item.id !== itemId)
       );
@@ -95,39 +103,75 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    fetchCartData();
+    if (id) {
+      setIsCartMatched(currentCart.toString() == id);
+    }
   }, []);
 
-  return (
-    <div className={styles.cart}>
-      <div className={styles.cart__header}>
-        <div className={styles.cart__header_title}>Корзина</div>
-        <div
-          className={styles.cart__header_clear}
-          onClick={() => formApplication(2)}
-        >
-          Очистить корзину
+  useEffect(() => {
+    fetchCartData();
+  }, [isCartMatched, currentCart]);
+
+  if (isCartMatched) {
+    return (
+      <div className={styles.cart}>
+        <div className={styles.cart__header}>
+          <div className={styles.cart__header_title}>Корзина</div>
+          <div
+            className={styles.cart__header_clear}
+            onClick={() => formApplication(2)}
+          >
+            Очистить корзину
+          </div>
+        </div>
+        <div className={styles.cart__content}>
+          {cartItems.map((option) => (
+            <CartItem
+              key={option.id}
+              {...option}
+              onDelete={deleteItem}
+              updateAllow={true}
+            />
+          ))}
+        </div>
+        <div className={styles.cart__actions}>
+          <Link to="/planesDevelopment_frontend/">
+            <Button className={styles.cart__actions_back}>Назад</Button>
+          </Link>
+
+          <Button
+            onClick={() => formApplication(3)}
+            className={styles.cart__actions_send}
+          >
+            Отправить заявку
+          </Button>
         </div>
       </div>
-      <div className={styles.cart__content}>
-        {cartItems.map((option) => (
-          <CartItem key={option.id} {...option} onDelete={deleteItem} />
-        ))}
+    );
+  } else {
+    return (
+      <div className={styles.cart}>
+        <div className={styles.cart__header}>
+          <div className={styles.cart__header_title}>Заявка №{id}</div>
+        </div>
+        <div className={styles.cart__content}>
+          {cartItems.map((option) => (
+            <CartItem
+              key={option.id}
+              {...option}
+              onDelete={deleteItem}
+              updateAllow={false}
+            />
+          ))}
+        </div>
+        <div className={styles.cart__actions}>
+          <Link to="/planesDevelopment_frontend/history">
+            <Button className={styles.cart__actions_back}>Назад</Button>
+          </Link>
+        </div>
       </div>
-      <div className={styles.cart__actions}>
-        <Link to="/planesDevelopment_frontend/">
-          <Button className={styles.cart__actions_back}>Назад</Button>
-        </Link>
-
-        <Button
-          onClick={() => formApplication(3)}
-          className={styles.cart__actions_send}
-        >
-          Отправить заявку
-        </Button>
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Cart;

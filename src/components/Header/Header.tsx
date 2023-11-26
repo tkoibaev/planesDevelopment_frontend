@@ -1,7 +1,7 @@
 import cartSvg from "../../assets/icons/bag-2.svg";
 import userSvg from "../../assets/icons/user.svg";
 import hisSvg from "../../assets/icons/history2.svg";
-
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -9,9 +9,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import styles from "./header.module.scss";
 import { Link } from "react-router-dom";
 import ProfileInfo from "../ProfileInfo/ProfileInfo";
+import { RootState } from "../../store/store";
 
 const Header = () => {
   const [v, sV] = useState(false);
+  const isAuth = useSelector((state: RootState) => state.user.is_authenticated);
   return (
     <div className={styles.header}>
       <div className={styles.container}>
@@ -22,16 +24,24 @@ const Header = () => {
         </div>
 
         <div className={styles.header__profile}>
-          <Link style={{ height: 27 }} to="/planesDevelopment_frontend/history">
-            <div className={styles.cart}>
-              <img style={{ width: 27 }} src={hisSvg} alt="History" />
-            </div>
-          </Link>
-          <Link to="/planesDevelopment_frontend/cart">
-            <div className={styles.cart}>
-              <img src={cartSvg} alt="Cart" />
-            </div>
-          </Link>
+          {isAuth && (
+            <Link
+              style={{ height: 27 }}
+              to="/planesDevelopment_frontend/history"
+            >
+              <div className={styles.cart}>
+                <img style={{ width: 27 }} src={hisSvg} alt="History" />
+              </div>
+            </Link>
+          )}
+
+          {isAuth && (
+            <Link to="/planesDevelopment_frontend/cart">
+              <div className={styles.cart}>
+                <img src={cartSvg} alt="Cart" />
+              </div>
+            </Link>
+          )}
 
           <div
             className={styles.user}

@@ -20,17 +20,14 @@ import { OptionsMock } from "../../consts";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { updateCart } from "../../store/userSlice";
-
+import { Response } from "../../types";
+import { toast } from "react-toastify";
 const cookies = new Cookies();
 
 interface MainPageProps {
   loading: boolean;
 }
 const MainPage: React.FC<MainPageProps> = ({ loading }) => {
-  // const [items, setItems] = useState<cardInfoProps[]>([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  //!!!!!!!!!!!!!!!!!1
-
   const dispatch = useDispatch();
   const searchValue = useSelector(
     (state: RootState) => state.filter.input_value
@@ -42,6 +39,36 @@ const MainPage: React.FC<MainPageProps> = ({ loading }) => {
     (state: RootState) => state.filter.price_range
   );
   const options = useSelector((state: RootState) => state.filter.options);
+
+  const addOptionToApp = async (id: number) => {
+    try {
+      const response: Response = await axios(
+        `http://localhost:8000/options/${id}/add_to_application/`,
+        {
+          method: "POST",
+          withCredentials: true,
+        }
+      );
+      if (response.data) {
+        dispatch(updateCart(response.data));
+      }
+      toast.success("Добавлено в корзину", {
+        icon: "⚡",
+      });
+      //🛩⚡✅✈
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const cardAddButtonClick = (
+    id: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.stopPropagation();
+    e.preventDefault();
+    addOptionToApp(id);
+  };
 
   return (
     <div className={styles.mainpage}>
@@ -67,13 +94,19 @@ const MainPage: React.FC<MainPageProps> = ({ loading }) => {
           {loading
             ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
             : options.map((item: cardInfoProps) => (
-                // <Link
-                //   to={`/planesDevelopment_frontend/${item.id}`}
-                //   key={item.id}
-                //   style={{ textDecoration: "none", color: "black" }}
-                // >
-                <Card key={item.id} {...item} />
-                //</Link>
+                <Link
+                  to={`/planesDevelopment_frontend/${item.id}`}
+                  key={item.id}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <Card
+                    onAddClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      cardAddButtonClick(item.id, e)
+                    }
+                    key={item.id}
+                    {...item}
+                  ></Card>
+                </Link>
               ))}
         </div>
       </div>

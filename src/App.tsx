@@ -22,7 +22,7 @@ import { setOptions } from "./store/filtersSlices";
 import { OptionsMock } from "./consts";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Sas from "./pages/sas";
 const cookies = new Cookies();
 function App() {
   const url = window.location.pathname.split("/").pop();
@@ -40,22 +40,25 @@ function App() {
 
   const login = async () => {
     try {
-      const response: Response = await axios.get(
+      const response: Response = await axios(
         "http://localhost:8000/user_info/",
         {
+          method: "GET",
           withCredentials: true,
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            Authorization: `Bearer ${cookies.get("access_token")}`,
-          },
+          // headers: {
+          //   "Content-type": "application/json; charset=UTF-8",
+          //   Authorization: `Bearer ${cookies.get("access_token")}`,
+          // },
         }
       );
+      console.log(response.data);
       dispatch(
         updateUser({
           is_authenticated: true,
           is_moderator: response.data["is_moderator"],
           user_id: response.data["user_id"],
           user_email: response.data["email"],
+          current_cart: response.data["current_cart"],
         })
       );
     } catch {
@@ -102,10 +105,7 @@ function App() {
     }
   });
   React.useEffect(() => {
-    console.log("fetch");
-    setTimeout(() => {
-      fetchData();
-    }, 100);
+    fetchData();
   });
 
   const createMock = () => {
@@ -157,6 +157,10 @@ function App() {
           element={<ApplicationsHistoryPage />}
         />
         <Route path="/planesDevelopment_frontend/cart" element={<CartPage />} />
+        <Route
+          path="/planesDevelopment_frontend/application/:id"
+          element={<CartPage />}
+        />
       </Routes>
       <ToastContainer autoClose={1000} pauseOnHover={false} />
     </>
