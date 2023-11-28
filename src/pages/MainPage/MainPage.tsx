@@ -58,6 +58,9 @@ const MainPage: React.FC<MainPageProps> = ({ loading }) => {
       //🛩⚡✅✈
     } catch (e) {
       console.log(e);
+      toast.error("Сперва авторизируйтесь", {
+        icon: "😕",
+      });
     }
   };
 

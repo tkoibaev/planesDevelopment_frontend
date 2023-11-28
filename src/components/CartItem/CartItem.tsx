@@ -29,7 +29,7 @@ const CartItem: React.FC<cartItemProps> = ({
   return (
     <div className={styles.cart__item}>
       <div className={styles["cart__item-img"]}>
-        <img src={mock} alt="option" />
+        <img src={image} alt="option" />
       </div>
       <div className={styles["cart__item-info"]}>
         <h3>{title}</h3>
