@@ -2,7 +2,8 @@ import { configureStore } from "@reduxjs/toolkit"
 import Option, { optionData } from "../types"
 import userReducer from "./userSlice"
 import filterReducer from "./filtersSlices"
-import breadReducer from "./breadCrumbs"
+import cartReducer from "./cartSlice"
+import moderAppReducer from "./moderAppSlice"
 
 export interface RootState {
   user: {
@@ -11,6 +12,7 @@ export interface RootState {
     is_authenticated: boolean
     is_moderator: boolean
     current_cart: number
+    // l:number
   }
   filter: {
     price_range: number[]
@@ -18,13 +20,21 @@ export interface RootState {
     dropdown_value: Option
     options: optionData[]
   }
+  cart: {
+    items: optionData[]
+  }
+  moderApp: {
+    input_value: string
+    dropdown_value: Option
+  }
 }
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     filter: filterReducer,
-    bread: breadReducer,
+    cart: cartReducer,
+    moderApp: moderAppReducer,
   },
 })
 

@@ -1,39 +1,38 @@
-import React, { useEffect, useState } from "react";
-import CartItem from "../CartItem/CartItem";
-import { Response } from "../../types";
-import Cookies from "universal-cookie";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react"
+import CartItem from "../CartItem/CartItem"
+import { Response } from "../../types"
+import Cookies from "universal-cookie"
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
 
-const cookies = new Cookies();
-import { cartItemProps } from "../../types";
+const cookies = new Cookies()
+import { cartItemProps } from "../../types"
 
-import styles from "./Cart.module.scss";
-import Button from "../Button/Button";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { RootState } from "../../store/store";
-import { updateCart } from "../../store/userSlice";
-import { toast } from "react-toastify";
+import styles from "./Cart.module.scss"
+import Button from "../Button/Button"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { RootState } from "../../store/store"
+import { updateCart } from "../../store/userSlice"
+import { toast } from "react-toastify"
+import { setCart } from "../../store/cartSlice"
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState<cartItemProps[]>([]);
-  const [isCartMatched, setIsCartMatched] = useState<boolean>(true);
-  const { id } = useParams<{ id: string }>() as { id: string };
-  const currentCart = useSelector(
-    (state: RootState) => state.user.current_cart
-  );
+  const [cartItems, setCartItems] = useState<cartItemProps[]>([])
+  const [isCartMatched, setIsCartMatched] = useState<boolean>(true)
+  const { id } = useParams<{ id: string }>() as { id: string }
+  const currentCart = useSelector((state: RootState) => state.user.current_cart)
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const cartApplication = useSelector(
     (state: RootState) => state.user.current_cart
-  );
+  )
 
   const fetchCartData = async () => {
     try {
       const url = isCartMatched
         ? `http://127.0.0.1:8000/applications/${cartApplication}/`
-        : `http://127.0.0.1:8000/applications/${id}/`;
+        : `http://127.0.0.1:8000/applications/${id}/`
 
       const response: Response = await axios(url, {
         method: "GET",
@@ -42,20 +41,20 @@ const Cart = () => {
           "Content-type": "application/json; charset=UTF-8",
           Authorization: `Bearer ${cookies.get("access_token")}`,
         },
-      });
+      })
 
-      console.log(response.data);
-      setCartItems(response.data.options);
+      console.log(response.data)
+      setCartItems(response.data.options)
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
+  }
 
   const formApplication = async (status_id: number) => {
     try {
       const updatedData = {
         status: status_id,
-      };
+      }
 
       const response: Response = await axios(
         `http://localhost:8000/applications/${cartApplication}/update_by_user/`,
@@ -68,17 +67,17 @@ const Cart = () => {
           //   Authorization: `Bearer ${cookies.get("access_token")}`,
           // },
         }
-      );
+      )
 
-      dispatch(updateCart(-1));
-      navigate("/planesDevelopment_frontend/");
+      dispatch(updateCart(-1))
+      navigate("/planesDevelopment_frontend/")
       toast.success("Заказ оформлен", {
         icon: "🚀",
-      });
+      })
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
+  }
 
   const deleteItem = async (itemId: number) => {
     try {
@@ -92,25 +91,27 @@ const Cart = () => {
           //   Authorization: `Bearer ${cookies.get("access_token")}`,
           // },
         }
-      );
-      console.log(responce);
+      )
+      console.log(responce)
       setCartItems((prevCartItems) =>
         prevCartItems.filter((item) => item.id !== itemId)
-      );
+      )
+      console.log(cartItems)
+      dispatch(setCart(cartItems))
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
+  }
 
   useEffect(() => {
     if (id) {
-      setIsCartMatched(currentCart.toString() == id);
+      setIsCartMatched(currentCart.toString() == id)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    fetchCartData();
-  }, [isCartMatched, currentCart]);
+    fetchCartData()
+  }, [isCartMatched, currentCart])
 
   if (isCartMatched) {
     return (
@@ -147,7 +148,7 @@ const Cart = () => {
           </Button>
         </div>
       </div>
-    );
+    )
   } else {
     return (
       <div className={styles.cart}>
@@ -170,8 +171,8 @@ const Cart = () => {
           </Link>
         </div>
       </div>
-    );
+    )
   }
-};
+}
 
-export default Cart;
+export default Cart

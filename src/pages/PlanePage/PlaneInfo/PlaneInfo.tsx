@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 
-import Button from "../../../components/Button/Button";
-import defPlane from "../../../assets/icons/flight.png";
+import Button from "../../../components/Button/Button"
+import defPlane from "../../../assets/icons/flight.png"
 
-import styles from "./planeinfo.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { Response } from "../../../types";
+import styles from "./planeinfo.module.scss"
+import { useDispatch, useSelector } from "react-redux"
+import { Response } from "../../../types"
 
-import { cardInfoProps } from "../../../types";
-import { DOMEN } from "../../../consts";
-import { OptionsMock } from "../../../consts";
-import axios from "axios";
-import { updateCart } from "../../../store/userSlice";
-import { toast } from "react-toastify";
+import { cardInfoProps } from "../../../types"
+import { DOMEN } from "../../../consts"
+import { OptionsMock } from "../../../consts"
+import axios from "axios"
+import { updateCart } from "../../../store/userSlice"
+import { toast } from "react-toastify"
 
 type PlaneInfoProps = {
-  id: string;
-};
+  id: string
+}
 
 const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
-  const dispatch = useDispatch();
-  const [mock, setMock] = useState(false);
+  const dispatch = useDispatch()
+  const [mock, setMock] = useState(false)
   const [info, setInfo] = useState<cardInfoProps | undefined>({
     id: 0,
     title: "",
@@ -30,23 +30,28 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
     available: true,
     features: [""],
     image: "",
-  });
+  })
 
   const getInfo = async () => {
     try {
       const responce = await axios(`http://localhost:8000/options/${id}`, {
         method: "GET",
-      });
-      setInfo(responce.data);
+        // withCredentials: true,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          // Authorization: `Bearer ${cookies.get("access_token")}`,
+        },
+      })
+      setInfo(responce.data)
     } catch (error) {
-      setMock(true);
+      setMock(true)
       let filteredGroups: cardInfoProps | undefined = OptionsMock.find(
         (group) => group.id == parseInt(id)
-      );
-      setInfo(filteredGroups);
-      console.log("Ошибка при выполнении запроса:", error);
+      )
+      setInfo(filteredGroups)
+      console.log("Ошибка при выполнении запроса:", error)
     }
-  };
+  }
 
   const addOptionToApp = async (id: number) => {
     try {
@@ -56,26 +61,26 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
           method: "POST",
           withCredentials: true,
         }
-      );
+      )
       if (response.data) {
-        dispatch(updateCart(response.data));
+        dispatch(updateCart(response.data))
       }
       toast.success("Добавлено в корзину", {
         icon: "⚡",
-      });
+      })
       //🛩⚡✅✈
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  };
+  }
 
   useEffect(() => {
-    getInfo();
-  }, []);
+    getInfo()
+  }, [])
 
   const addOptionToCart = (id: number) => {
-    addOptionToApp(id);
-  };
+    addOptionToApp(id)
+  }
 
   return (
     <div className={styles.planeinfo}>
@@ -111,7 +116,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PlaneInfo;
+export default PlaneInfo

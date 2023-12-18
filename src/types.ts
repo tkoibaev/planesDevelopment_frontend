@@ -1,47 +1,57 @@
-import { AxiosResponse } from "axios";
-import { MouseEventHandler } from "react";
+import { AxiosResponse } from "axios"
+import { MouseEventHandler } from "react"
 
 export default interface Option {
-  id: number;
-  name: string;
+  id: number
+  name: string
 }
 
 export interface optionData {
-  id: number;
-  title: string;
-  category: string;
-  description: string;
-  features: string[];
-  available: boolean;
-  price: number;
-  image: string;
+  id: number
+  title: string
+  category: string
+  description: string
+  features: string[]
+  available: boolean
+  price: number
+  image: string
 }
 
 export type cardInfoProps = {
   // children: React.ReactNode; //!!!!!!!!!!!!
-  id: number;
-  title: string;
-  category: string;
-  description: string;
-  features: string[];
-  available: boolean;
-  price: number;
-  image: string;
-  onAddClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-};
+  id: number
+  title: string
+  category: string
+  description: string
+  features: string[]
+  available: boolean
+  price: number
+  image: string
+  onAddClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+}
 
 export type cartItemProps = {
-  id: number;
-  title: string;
-  category: string;
-  description: string;
-  features: string[];
-  available: boolean;
-  price: number;
-  image: string;
-  amount: number;
-  updateAllow: boolean;
-  onDelete: (id: number) => void;
-};
+  id: number
+  title: string
+  category: string
+  description: string
+  features: string[]
+  available: boolean
+  price: number
+  image: string
+  amount: number
+  updateAllow: boolean
+  onDelete: (id: number) => void
+}
 
-export type Response = Promise<AxiosResponse> | any;
+export type Response = Promise<AxiosResponse> | any
+
+export type applicationData = {
+  id: number
+  status: number
+  created_at: string
+  formed_at: string
+  completed_at: string
+  moderator: string
+  customer: number
+}

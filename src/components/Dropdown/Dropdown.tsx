@@ -1,25 +1,23 @@
-import { Dropdown } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import styles from "./dropdown.module.scss";
+import { Dropdown } from "react-bootstrap"
+import { useDispatch } from "react-redux"
+import styles from "./dropdown.module.scss"
 import {
   setDropdownValueId,
   setDropdownValueName,
-} from "../../store/filtersSlices";
-import Option from "../../types";
+} from "../../store/filtersSlices"
+import Option from "../../types"
 
 export type DropDownProps = {
-  options: Option[];
-  title: string;
-};
+  options: Option[]
+  title: string
+  handleSelect: (value: Option) => void
+}
 
-const DropDown: React.FC<DropDownProps> = ({ options, title }) => {
-  const dispatch = useDispatch();
-
-  const handleSelect = (selectedOption: Option) => {
-    dispatch(setDropdownValueName(selectedOption.name));
-    dispatch(setDropdownValueId(selectedOption.id));
-  };
-
+const DropDown: React.FC<DropDownProps> = ({
+  options,
+  title,
+  handleSelect,
+}) => {
   return (
     <Dropdown className={styles.dropdown}>
       <Dropdown.Toggle className={styles.dropdown__toggle}>
@@ -34,7 +32,7 @@ const DropDown: React.FC<DropDownProps> = ({ options, title }) => {
         ))}
       </Dropdown.Menu>
     </Dropdown>
-  );
-};
+  )
+}
 
-export default DropDown;
+export default DropDown

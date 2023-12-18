@@ -1,17 +1,17 @@
 .content {
   // position: absolute;
   // margin-top: 50px;
-  padding-bottom: 100px;
+  //   padding-bottom: 100px;
   // top: 55%;
   // left: 50%;
-  width: 930px;
+  width: auto;
   max-height: 500px;
   overflow-y: scroll;
   // -webkit-transform: translate(-50%, -50%);
   // transform: translate(-50%, -50%);
 }
 table {
-  width: 900px;
+  width: auto;
   height: 500px;
   border-collapse: collapse;
   overflow: hidden;
@@ -38,12 +38,24 @@ tbody td {
   position: relative;
 }
 
+.button {
+  &_delete {
+    width: 100px;
+    font-size: 18px;
+    padding: 10px 0px;
+    border: 1px solid black;
+    &:hover {
+      color: black;
+      background-color: #479f9f;
+    }
+  }
+}
 .moder_action {
   display: flex;
-  gap: 30px;
+  gap: 20px;
 
   &__button {
-    width: 30px;
+    width: 40px;
     border: 2px solid black;
     padding: 3px;
 
@@ -52,17 +64,7 @@ tbody td {
     }
   }
 }
-.filters {
-  display: flex;
-  gap: 40px;
-  margin-bottom: 30px;
-}
-
-.input {
-  width: 300px;
-}
-
-.date {
-  border: 1px solid #33cccc;
-  border-radius: 20px;
+.addbutton {
+  margin-top: 20px;
+  text-align: right;
 }

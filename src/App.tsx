@@ -19,10 +19,13 @@ import CartPage from "./pages/CartPage/CartPage"
 import ApplicationsHistoryPage from "./pages/ApplicationsHistoryPage/ApplicationsHistoryPage"
 import { RootState } from "./store/store"
 import { setOptions } from "./store/filtersSlices"
+import { setCart } from "./store/cartSlice"
 import { OptionsMock } from "./consts"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import OptionsList from "./pages/OptionsList/OptionsList"
 import Sas from "./pages/sas"
+import OptionAdminPanel from "./pages/OptionAdminPanel/OptionAdminPanel"
 const cookies = new Cookies()
 function App() {
   const url = window.location.pathname.split("/").pop()
@@ -37,6 +40,7 @@ function App() {
   const sliderValue = useSelector(
     (state: RootState) => state.filter.price_range
   )
+  // const cart = useSelector((state: RootState) => state.cart.items.length)
 
   const login = async () => {
     try {
@@ -99,9 +103,29 @@ function App() {
     }
   }
 
+  const currentCart = useSelector((state: RootState) => state.user.current_cart)
+
+  const fetchCart = async () => {
+    try {
+      const response: Response = await axios(
+        `http://localhost:8000/applications/${currentCart}`,
+        {
+          method: "GET",
+          // withCredentials: true,
+        }
+      )
+      console.log(response.data)
+      const options = response.data.options
+      dispatch(setCart(options))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   React.useEffect(() => {
     if (cookies.get("access_token")) {
       login()
+      fetchCart()
     }
   })
   React.useEffect(() => {
@@ -160,6 +184,14 @@ function App() {
         <Route
           path="/planesDevelopment_frontend/application/:id"
           element={<CartPage />}
+        />
+        <Route
+          path="/planesDevelopment_frontend/options-list"
+          element={<OptionsList />}
+        />
+        <Route
+          path="/planesDevelopment_frontend/options-list/:id"
+          element={<OptionAdminPanel />}
         />
       </Routes>
       <ToastContainer autoClose={1000} pauseOnHover={false} />
