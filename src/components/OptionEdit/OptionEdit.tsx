@@ -102,9 +102,10 @@ const OptionEdit = () => {
     const formData: FormData = new FormData(e.target as HTMLFormElement)
     formData.append("available", status.available.toString())
     await postOption(formData)
+    await postOptionImage(imageFile)
   }
   const handleImageSubmit = async () => {
-    await postOptionImage(imageFile)
+    // await postOptionImage(imageFile)
   }
 
   const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {

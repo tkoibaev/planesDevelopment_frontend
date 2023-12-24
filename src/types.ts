@@ -45,6 +45,9 @@ export type cartItemProps = {
 }
 
 export type Response = Promise<AxiosResponse> | any
+interface Customer {
+  email: string
+}
 
 export type applicationData = {
   id: number
@@ -53,5 +56,5 @@ export type applicationData = {
   formed_at: string
   completed_at: string
   moderator: string
-  customer: number
+  customer: Customer
 }

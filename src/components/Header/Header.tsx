@@ -4,6 +4,7 @@ import hisSvg from "../../assets/icons/history2.svg"
 import optList from "../../assets/icons/options.png"
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
+import { useLocation } from "react-router-dom"
 
 import { AnimatePresence, motion } from "framer-motion"
 
@@ -13,10 +14,12 @@ import ProfileInfo from "../ProfileInfo/ProfileInfo"
 import { RootState } from "../../store/store"
 
 const Header = () => {
+  const location = useLocation()
   const cart = useSelector((state: RootState) => state.cart.items.length)
   const [v, sV] = useState(false)
   const isAuth = useSelector((state: RootState) => state.user.is_authenticated)
   const isModerator = useSelector((state: RootState) => state.user.is_moderator)
+
   return (
     <div className={styles.header}>
       <div className={styles.container}>
@@ -38,14 +41,16 @@ const Header = () => {
             </Link>
           )}
 
-          {isAuth && !isModerator && (
-            <Link to="/planesDevelopment_frontend/cart">
-              <div className={styles.cart}>
-                <img src={cartSvg} alt="Cart" />
-                {/* <div>{cart}</div> */}
-              </div>
-            </Link>
-          )}
+          {location.pathname === "/planesDevelopment_frontend/" &&
+            isAuth &&
+            !isModerator && (
+              <Link to="/planesDevelopment_frontend/cart">
+                <div className={styles.cart}>
+                  <img src={cartSvg} alt="Cart" />
+                  {/* <div>{cart}</div> */}
+                </div>
+              </Link>
+            )}
           {isModerator && (
             <Link to="/planesDevelopment_frontend/options-list">
               <div className={styles.cart}>

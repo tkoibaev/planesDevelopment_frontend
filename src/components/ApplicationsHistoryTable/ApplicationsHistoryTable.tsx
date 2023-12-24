@@ -38,9 +38,9 @@ const cookies = new Cookies()
 // }
 const ApplicationsHistoryTable = () => {
   const [application, setApplication] = useState<applicationData[]>([])
-  const [applicationRange, setApplicationRange] = useState<applicationData[]>(
-    []
-  )
+  // const [applicationRange, setApplicationRange] = useState<applicationData[]>(
+  //   []
+  // )
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
   const isModerator = useSelector((state: RootState) => state.user.is_moderator)
@@ -53,7 +53,7 @@ const ApplicationsHistoryTable = () => {
     (state: RootState) => state.moderApp.input_value
   )
   const categoryValue = useSelector(
-    (state: RootState) => state.moderApp.dropdown_value.name
+    (state: RootState) => state.moderApp.dropdown_value
   )
 
   const handleSelect = (selectedOption: Option) => {
@@ -63,9 +63,13 @@ const ApplicationsHistoryTable = () => {
 
   const fetchAppsData = async () => {
     try {
+      const params = `?start_day=${startDate}&end_day=${endDate}&category=${encodeURIComponent(
+        categoryValue.id
+      )}`
+
       axios.defaults.withCredentials = true
       const response: Response = await axios(
-        `http://localhost:8000/applications/`,
+        `http://localhost:8000/applications/${params}`,
         {
           method: "GET",
           //  credentials: 'include',
@@ -84,8 +88,8 @@ const ApplicationsHistoryTable = () => {
             return dateB - dateA // for descending order
           }
         )
+        console.log(response.data)
         setApplication(sortedApplications)
-        setApplicationRange(sortedApplications)
       }
       console.log(response.data)
     } catch (e) {
@@ -127,16 +131,15 @@ const ApplicationsHistoryTable = () => {
     // }, 1000)
 
     // return () => clearInterval(intervalId)
-  }, [])
+  }, [categoryValue, startDate, endDate])
 
-  const data = application.filter(
-    (item) =>
-      item.customer
-        .toString()
-        .toLowerCase()
-        .includes(searchValue.toLowerCase()) &&
-      (selectedStatus === 0 || item.status === selectedStatus)
+  const data = application.filter((item) =>
+    item.customer.email
+      .toString()
+      .toLowerCase()
+      .includes(searchValue.toLowerCase())
   )
+  // const data = application
 
   const columns: Array<Column<{}>> = React.useMemo(
     () => [
@@ -200,7 +203,7 @@ const ApplicationsHistoryTable = () => {
       },
       {
         Header: "Заказчик",
-        accessor: "customer",
+        accessor: "customer.email",
       },
       {
         Header: "Информация",
@@ -265,17 +268,18 @@ const ApplicationsHistoryTable = () => {
       return
     }
 
-    let filtered = applicationRange.filter((product) => {
-      let productDate = new Date(product["created_at"])
-      return (
-        productDate >= date.selection.startDate &&
-        productDate <= date.selection.endDate
-      )
-    })
+    // let filtered = applicationRange.filter((product) => {
+    //   let productDate = new Date(product["created_at"])
+    //   return (
+    //     productDate >= date.selection.startDate &&
+    //     productDate <= date.selection.endDate
+    //   )
+    // })
     setStartDate(date.selection.startDate)
     setEndDate(date.selection.endDate)
-    setApplication(filtered)
+    // setApplication(filtered) //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     console.log(startDate)
+    console.log(endDate)
   }
   return (
     <>
@@ -289,7 +293,7 @@ const ApplicationsHistoryTable = () => {
           <DropDown
             handleSelect={handleSelect}
             options={STATUSES}
-            title={categoryValue}
+            title={categoryValue.name}
           />
           <DateRange
             showDateDisplay={false}
