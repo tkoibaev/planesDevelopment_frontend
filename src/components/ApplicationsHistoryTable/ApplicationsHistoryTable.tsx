@@ -68,7 +68,7 @@ const ApplicationsHistoryTable = () => {
         `http://localhost:8000/applications/`,
         {
           method: "GET",
-          //   credentials: 'include',
+          //  credentials: 'include',
           withCredentials: true,
           headers: {
             "Content-type": "application/json; charset=UTF-8",
@@ -77,14 +77,22 @@ const ApplicationsHistoryTable = () => {
         }
       )
       if (response.status == 200) {
-        setApplication(response.data)
-        setApplicationRange(response.data)
+        const sortedApplications = response.data.sort(
+          (a: { created_at: Date }, b: { created_at: Date }) => {
+            const dateA = new Date(a.created_at).getTime()
+            const dateB = new Date(b.created_at).getTime()
+            return dateB - dateA // for descending order
+          }
+        )
+        setApplication(sortedApplications)
+        setApplicationRange(sortedApplications)
       }
       console.log(response.data)
     } catch (e) {
       console.log(e)
     }
   }
+
   const formApplication = async (application_id: number, status_id: number) => {
     try {
       const updatedData = {
@@ -114,6 +122,11 @@ const ApplicationsHistoryTable = () => {
 
   useEffect(() => {
     fetchAppsData()
+    // const intervalId = setInterval(() => {
+    //   fetchAppsData()
+    // }, 1000)
+
+    // return () => clearInterval(intervalId)
   }, [])
 
   const data = application.filter(
@@ -124,6 +137,7 @@ const ApplicationsHistoryTable = () => {
         .includes(searchValue.toLowerCase()) &&
       (selectedStatus === 0 || item.status === selectedStatus)
   )
+
   const columns: Array<Column<{}>> = React.useMemo(
     () => [
       {
@@ -261,6 +275,7 @@ const ApplicationsHistoryTable = () => {
     setStartDate(date.selection.startDate)
     setEndDate(date.selection.endDate)
     setApplication(filtered)
+    console.log(startDate)
   }
   return (
     <>

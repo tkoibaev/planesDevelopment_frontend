@@ -42,7 +42,7 @@ const Header = () => {
             <Link to="/planesDevelopment_frontend/cart">
               <div className={styles.cart}>
                 <img src={cartSvg} alt="Cart" />
-                <div>{cart}</div>
+                {/* <div>{cart}</div> */}
               </div>
             </Link>
           )}

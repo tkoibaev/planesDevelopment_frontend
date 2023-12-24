@@ -157,7 +157,7 @@ const OptionsTable = () => {
         </table>
       </div>
       <div className={styles.addbutton}>
-        <Link to={`/planesDevelopment_frontend/options-list/1`}>
+        <Link to={`/planesDevelopment_frontend/options-list/0`}>
           <Button>Добавить новую опцию</Button>
         </Link>
       </div>
