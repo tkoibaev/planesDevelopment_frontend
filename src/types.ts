@@ -42,6 +42,7 @@ export type cartItemProps = {
   amount: number
   updateAllow: boolean
   onDelete: (id: number) => void
+  onAmountUpdate: (id: number, action: number) => void
 }
 
 export type Response = Promise<AxiosResponse> | any

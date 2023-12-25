@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { useTable, Column } from "react-table"
 import axios from "axios"
 import { Response } from "../../types"
-import moment from "moment"
 import { useDispatch, useSelector } from "react-redux"
 import styles from "./ApplicationsHistoryTable.module.scss"
 import Cookies from "universal-cookie"
@@ -10,7 +9,6 @@ import { Link } from "react-router-dom"
 import Button from "../Button/Button"
 import { RootState } from "../../store/store"
 import Option from "../../types"
-
 import tick from "../../assets/icons/tick.png"
 import close from "../../assets/icons/close.png"
 import Input from "../Input/Input"
@@ -24,10 +22,12 @@ import { STATUSES } from "../../consts"
 import DropDown from "../Dropdown/Dropdown"
 import { toast } from "react-toastify"
 // declare module "date.d.ts"
-import { DateRange } from "react-date-range"
+import { DateRange, DateRangePicker } from "react-date-range"
+import { ru } from "date-fns/locale"
 import "react-date-range/dist/styles.css" // main style file
 import "react-date-range/dist/theme/default.css" // theme css file
 import { RangeKeyDict } from "react-date-range"
+import moment from "moment"
 
 const cookies = new Cookies()
 // interface DateRangeInterface {
@@ -125,12 +125,12 @@ const ApplicationsHistoryTable = () => {
   }
 
   useEffect(() => {
-    fetchAppsData()
-    // const intervalId = setInterval(() => {
-    //   fetchAppsData()
-    // }, 1000)
-
-    // return () => clearInterval(intervalId)
+    // fetchAppsData()
+    const intervalId = setInterval(() => {
+      fetchAppsData()
+    }, 1000)
+    moment.locale("ru")
+    return () => clearInterval(intervalId)
   }, [categoryValue, startDate, endDate])
 
   const data = application.filter((item) =>
@@ -247,7 +247,7 @@ const ApplicationsHistoryTable = () => {
   )
 
   const initialState = {
-    hiddenColumns: isModerator ? [""] : ["customer", "action"],
+    hiddenColumns: isModerator ? [""] : ["customer.email", "action"],
   }
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -296,6 +296,7 @@ const ApplicationsHistoryTable = () => {
             title={categoryValue.name}
           />
           <DateRange
+            locale={ru}
             showDateDisplay={false}
             className={styles.date}
             rangeColors={["#33cccc", "#3ecf8e", "#fed14c"]}

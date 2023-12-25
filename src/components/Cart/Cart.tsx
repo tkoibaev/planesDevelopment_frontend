@@ -71,9 +71,11 @@ const Cart = () => {
 
       dispatch(updateCart(-1))
       navigate("/planesDevelopment_frontend/")
-      toast.success("Заказ оформлен", {
-        icon: "🚀",
-      })
+      if (status_id == 3) {
+        toast.success("Заказ оформлен", {
+          icon: "🚀",
+        })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -98,6 +100,36 @@ const Cart = () => {
       )
       console.log(cartItems)
       dispatch(setCart(cartItems))
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const updateAmount = async (itemId: number, action: number) => {
+    try {
+      const updatedData = {
+        action: action,
+      }
+
+      const response: Response = await axios(
+        `http://localhost:8000/applications/${cartApplication}/update_amount/${itemId}/`,
+        {
+          method: "PUT",
+          data: updatedData,
+          withCredentials: false,
+          // headers: {
+          //   "Content-type": "application/json; charset=UTF-8",
+          //   Authorization: `Bearer ${cookies.get("access_token")}`,
+          // },
+        }
+      )
+
+      // dispatch(updateCart(-1))
+      // navigate("/planesDevelopment_frontend/")
+      // toast.success("Заказ оформлен", {
+      //   icon: "🚀",
+      // })
+      fetchCartData()
     } catch (e) {
       console.log(e)
     }
@@ -131,6 +163,7 @@ const Cart = () => {
               key={option.id}
               {...option}
               onDelete={deleteItem}
+              onAmountUpdate={updateAmount}
               updateAllow={true}
             />
           ))}

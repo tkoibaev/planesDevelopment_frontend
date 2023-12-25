@@ -82,21 +82,23 @@ function App() {
             sliderValue[1]
           }&category=${encodeURIComponent(categoryValue)}`
 
-      const response = await axios(`http://127.0.0.1:8000/options/${params}`, {
+      const response = await axios(`http://localhost:8000/options/${params}`, {
         method: "GET",
         withCredentials: true,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${cookies.get("access_token")}`,
-        },
+        // headers: {
+        //   "Content-type": "application/json; charset=UTF-8",
+        //   Authorization: `Bearer ${cookies.get("access_token")}`,
+        // },
       })
-      console.log(response.data)
+      console.log(response)
       const options = response.data.options
       if (response.data.app_id) {
         dispatch(updateCart(response.data.app_id))
       }
       dispatch(setOptions(options))
       setIsLoading(false)
+      console.log(response.data.app_id)
+      return response.data.app_id
     } catch (error) {
       createMock()
       setIsLoading(false)
@@ -105,13 +107,13 @@ function App() {
 
   const currentCart = useSelector((state: RootState) => state.user.current_cart)
 
-  const fetchCart = async () => {
+  const fetchCart = async (app_id: number) => {
     try {
       const response: Response = await axios(
-        `http://localhost:8000/applications/${currentCart}`,
+        `http://localhost:8000/applications/${app_id}/`,
         {
           method: "GET",
-          // withCredentials: true,
+          withCredentials: true,
         }
       )
       console.log(response.data)
@@ -125,12 +127,17 @@ function App() {
   React.useEffect(() => {
     if (cookies.get("access_token")) {
       login()
-      fetchCart()
+      // fetchCart()
     }
   })
   React.useEffect(() => {
-    fetchData()
+    handleSmt()
+    // const cartId = await fetchData()
   })
+  const handleSmt = async () => {
+    const cartId = await fetchData()
+    await fetchCart(cartId)
+  }
 
   const createMock = () => {
     let filteredOptions: cardInfoProps[] = OptionsMock.filter(

@@ -56,7 +56,8 @@ const MainPage: React.FC<MainPageProps> = ({ loading }) => {
       )
       console.log(response.data)
       if (response.data) {
-        dispatch(updateCart(response.data))
+        dispatch(updateCart(response.data.id))
+        dispatch(setCart(response.data.options))
       }
       toast.success("Добавлено в корзину", {
         icon: "⚡",
@@ -99,6 +100,9 @@ const MainPage: React.FC<MainPageProps> = ({ loading }) => {
       fetchCart()
     }, 200)
   }
+  useEffect(() => {
+    fetchCart()
+  }, [])
 
   const handleSelect = (selectedOption: Option) => {
     dispatch(setDropdownValueName(selectedOption.name))

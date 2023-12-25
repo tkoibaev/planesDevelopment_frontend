@@ -34,7 +34,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
 
   const getInfo = async () => {
     try {
-      const responce = await axios(`http://localhost:8000/options/${id}`, {
+      const responce = await axios(`http://localhost:8000/options/${id}/`, {
         method: "GET",
         // withCredentials: true,
         headers: {

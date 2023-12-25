@@ -57,25 +57,26 @@ const OptionEdit = () => {
         },
         data: formData as FormData,
       })
-      setOptionAdd(response.data.id)
-      toast.success("Опция успешно добавлена. Теперь добавьте изображение", {
+      toast.success("Опция успешно добавлена.", {
         icon: "🚀",
       })
+      console.log(response.data.id)
 
-      //   navigate("/planesDevelopment_frontend/options-list")
+      navigate("/planesDevelopment_frontend/options-list")
+      return response.data.id
     } catch {
-      toast.error("Проверьте введенные данных", {
+      toast.error("Проверьте введенные данные", {
         icon: "😕",
       })
     }
   }
 
-  const postOptionImage = async (file: File) => {
+  const postOptionImage = async (file: File, optionId: number) => {
     try {
       const formData = new FormData()
       formData.append("file", file)
       const response: Response = await axios(
-        `http://127.0.0.1:8000/options/${optionAdd}/image/post/`,
+        `http://127.0.0.1:8000/options/${optionId}/image/post/`,
         {
           method: "POST",
           headers: {
@@ -88,12 +89,8 @@ const OptionEdit = () => {
       toast.success("Изображение успешно добавлено", {
         icon: "🚀",
       })
-      navigate("/planesDevelopment_frontend/options-list")
-    } catch {
-      toast.error("Проверьте введенные данных", {
-        icon: "😕",
-      })
-    }
+      // navigate("/planesDevelopment_frontend/options-list")
+    } catch {}
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -101,11 +98,8 @@ const OptionEdit = () => {
 
     const formData: FormData = new FormData(e.target as HTMLFormElement)
     formData.append("available", status.available.toString())
-    await postOption(formData)
-    await postOptionImage(imageFile)
-  }
-  const handleImageSubmit = async () => {
-    // await postOptionImage(imageFile)
+    const optionId = await postOption(formData)
+    await postOptionImage(imageFile, optionId)
   }
 
   const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {
@@ -132,7 +126,6 @@ const OptionEdit = () => {
 
   return (
     <div className={styles["edit-form"]}>
-      <div>{isEdit}</div>
       <form className={styles["edit-form__block"]} onSubmit={handleSubmit}>
         <div className={styles["edit-form__block_text"]}>
           <h1>Внесние новой опции</h1>
@@ -181,8 +174,7 @@ const OptionEdit = () => {
           </div>
           <Button>Добавить</Button>
         </div>
-      </form>
-      <form className={styles.droparea} onSubmit={handleImageSubmit}>
+
         {drag ? (
           <div
             onDragStart={(e: React.DragEvent<HTMLDivElement>) =>
@@ -197,7 +189,7 @@ const OptionEdit = () => {
             onDrop={(e: React.DragEvent<HTMLDivElement>) => onDropHandler(e)}
             style={{
               width: `100%`,
-              height: `100%`,
+              height: `460px`,
               border: `5px dashed #33cccc`,
               borderRadius: 10,
               padding: `auto 0`,
@@ -227,7 +219,7 @@ const OptionEdit = () => {
             }
             style={{
               width: `100%`,
-              height: `100%`,
+              height: `460px`,
               border: `5px dashed #33cccc`,
               borderRadius: 10,
               padding: `10%`,
@@ -239,12 +231,7 @@ const OptionEdit = () => {
             <img style={{ width: 100, marginTop: 20 }} src={uploadIcon}></img>
           </div>
         )}
-
-        <div>
-          <Button>Добавить Изображение</Button>
-        </div>
       </form>
-      {/* </form> */}
     </div>
   )
 }

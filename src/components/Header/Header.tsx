@@ -3,7 +3,7 @@ import userSvg from "../../assets/icons/user.svg"
 import hisSvg from "../../assets/icons/history2.svg"
 import optList from "../../assets/icons/options.png"
 import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 
 import { AnimatePresence, motion } from "framer-motion"
@@ -19,7 +19,10 @@ const Header = () => {
   const [v, sV] = useState(false)
   const isAuth = useSelector((state: RootState) => state.user.is_authenticated)
   const isModerator = useSelector((state: RootState) => state.user.is_moderator)
-
+  const isCartEmpty = useSelector((state: RootState) => state.user.current_cart)
+  useEffect(() => {
+    console.log("header render")
+  }, [cart])
   return (
     <div className={styles.header}>
       <div className={styles.container}>
@@ -43,14 +46,20 @@ const Header = () => {
 
           {location.pathname === "/planesDevelopment_frontend/" &&
             isAuth &&
-            !isModerator && (
+            !isModerator &&
+            (isCartEmpty != -1 ? (
               <Link to="/planesDevelopment_frontend/cart">
                 <div className={styles.cart}>
                   <img src={cartSvg} alt="Cart" />
-                  {/* <div>{cart}</div> */}
+                  <div className={styles.cart_badge}>{cart}</div>
                 </div>
               </Link>
-            )}
+            ) : (
+              <div className={styles.cart}>
+                <img src={cartSvg} alt="Cart" style={{ opacity: "0.5" }} />
+                {/* <div>{cart}</div> */}
+              </div>
+            ))}
           {isModerator && (
             <Link to="/planesDevelopment_frontend/options-list">
               <div className={styles.cart}>
