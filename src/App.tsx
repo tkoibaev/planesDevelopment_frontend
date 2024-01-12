@@ -13,21 +13,15 @@ function App() {
       <Header />
       <Breadcrumps />
       <Routes>
-        <Route path="#/" element={<MainPage />} />
-        <Route path="#/planesDevelopment_frontend" element={<MainPage />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/planesDevelopment_frontend" element={<MainPage />} />
         {/* <Route path="/planes" element={<PlanePage />} /> */}
+        <Route path="/planesDevelopment_frontend/:id" element={<PlanePage />} />
         <Route
-          path="#/planesDevelopment_frontend/:id"
-          element={<PlanePage />}
-        />
-        <Route
-          path="#/planesDevelopment_frontend/registration"
+          path="/planesDevelopment_frontend/registration"
           element={<RegPage />}
         />
-        <Route
-          path="#/planesDevelopment_frontend/auth"
-          element={<AuthPage />}
-        />
+        <Route path="/planesDevelopment_frontend/auth" element={<AuthPage />} />
       </Routes>
     </>
   )
