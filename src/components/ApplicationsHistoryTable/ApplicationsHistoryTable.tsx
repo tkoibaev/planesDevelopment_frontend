@@ -295,8 +295,8 @@ const ApplicationsHistoryTable = () => {
             options={STATUSES}
             title={categoryValue.name}
           />
-          <DateRange
-            locale={ru}
+          <DateRangePicker
+            // locale={ru}
             showDateDisplay={false}
             className={styles.date}
             rangeColors={["#33cccc", "#3ecf8e", "#fed14c"]}

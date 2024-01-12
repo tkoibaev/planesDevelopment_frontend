@@ -87,34 +87,6 @@ const OptionsTable = () => {
           return <img style={{ width: 100 }} alt="aaa" src={value}></img>
         },
       },
-      //   {
-      //     Header: "Дата завершения",
-      //     accessor: "completed_at",
-      //     Cell: ({ value }) => (
-      //       <span>
-      //         {value ? moment(value).format("DD.MM.YYYY HH:mm") : "пока пусто"}
-      //       </span>
-      //     ),
-      //   },
-      //   {
-      //     Header: "Заказчик",
-      //     accessor: "customer",
-      //   },
-      //   {
-      //     Header: "Информация",
-      //     Cell: ({ cell }) => (
-      //       <Link
-      //         style={{
-      //           textDecoration: "underline",
-      //           color: "black",
-      //         }}
-      //         to={`/planesDevelopment_frontend/application/${cell.row.values.id}`}
-      //       >
-      //         Подробнее&gt;
-      //       </Link>
-      //       // <Button onClick={() => console.log("aaa")}>Открыть</Button>
-      //     ),
-      //   },
     ],
     []
   )
