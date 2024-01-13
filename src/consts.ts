@@ -29,7 +29,8 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 1000,
-    image: "src/assets/mockImg/cabin.png",
+    image:
+      "https://avatars.mds.yandex.net/i?id=ec8dc472296f7fc5505b8903572a4f3f2d800911-10096959-images-thumbs&n=13",
   },
   {
     id: 2,
@@ -51,7 +52,8 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 3000,
-    image: "src/assets/mockImg/cabin.png",
+    image:
+      "https://avatars.mds.yandex.net/i?id=ec8dc472296f7fc5505b8903572a4f3f2d800911-10096959-images-thumbs&n=13",
   },
   {
     id: 4,
@@ -62,7 +64,7 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 4000,
-    image: "src/assets/mockImg/engine.png",
+    image: "https://www.svgrepo.com/show/323543/turbine.svg",
   },
   {
     id: 5,
@@ -73,7 +75,8 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 5000,
-    image: "src/assets/mockImg/control.png",
+    image:
+      "https://e7.pngegg.com/pngimages/195/635/png-clipart-computer-icons-radar-radar-miscellaneous-business.png",
   },
   {
     id: 6,
@@ -84,6 +87,7 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 6000,
-    image: "src/assets/mockImg/engine.png",
+    image:
+      "https://e7.pngegg.com/pngimages/195/635/png-clipart-computer-icons-radar-radar-miscellaneous-business.png",
   },
 ]
