@@ -1,10 +1,10 @@
-import React from "react";
-import Button from "../Button/Button";
+import React from "react"
+import Button from "../Button/Button"
 
-import styles from "./card.module.scss";
-import defPlane from "../../assets/icons/flight.png";
+import styles from "./card.module.scss"
+import defPlane from "../../assets/icons/flight.png"
 
-import { cardInfoProps } from "../../types";
+import { cardInfoProps } from "../../types"
 // import svg from "../../assets/react.svg"
 
 const Card: React.FC<cardInfoProps> = ({ title, category, price, image }) => {
@@ -30,7 +30,7 @@ const Card: React.FC<cardInfoProps> = ({ title, category, price, image }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Card;
+export default Card

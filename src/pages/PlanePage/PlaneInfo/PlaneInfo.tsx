@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 
-import Button from "../../../components/Button/Button";
-import defPlane from "../../../assets/icons/flight.png";
+import Button from "../../../components/Button/Button"
+import defPlane from "../../../assets/icons/flight.png"
 
-import styles from "./planeinfo.module.scss";
+import styles from "./planeinfo.module.scss"
 
-import { cardInfoProps } from "../../../types";
-import { DOMEN } from "../../../consts";
-import { OptionsMock } from "../../../consts";
+import { cardInfoProps } from "../../../types"
+import { DOMEN } from "../../../consts"
+import { OptionsMock } from "../../../consts"
 
 type PlaneInfoProps = {
-  id: string;
-};
+  id: string
+}
 
 const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
-  const [mock, setMock] = useState(false);
+  const [mock, setMock] = useState(false)
   const [info, setInfo] = useState<cardInfoProps | undefined>({
     id: 0,
     title: "",
@@ -24,25 +24,25 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
     available: true,
     features: [""],
     image: "",
-  });
+  })
 
   useEffect(() => {
     fetch(`${DOMEN}/options/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        const option = data;
-        console.log(option);
-        setInfo(option);
+        const option = data
+        console.log(option)
+        setInfo(option)
       })
       .catch((error) => {
-        setMock(true);
+        setMock(true)
         let filteredGroups: cardInfoProps | undefined = OptionsMock.find(
           (group) => group.id == parseInt(id)
-        );
-        setInfo(filteredGroups);
-        console.log("Ошибка при выполнении запроса:", error);
-      });
-  }, []);
+        )
+        setInfo(filteredGroups)
+        console.log("Ошибка при выполнении запроса:", error)
+      })
+  }, [])
 
   return (
     <div className={styles.planeinfo}>
@@ -50,7 +50,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
         {info && info.image ? (
           <img
             className={styles.planeinfo__image_img}
-            src={mock ? `../${info.image}` : info.image}
+            src={mock ? `${info.image}` : info.image}
             alt="sssss"
           ></img>
         ) : (
@@ -78,7 +78,7 @@ const PlaneInfo: React.FC<PlaneInfoProps> = ({ id }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PlaneInfo;
+export default PlaneInfo

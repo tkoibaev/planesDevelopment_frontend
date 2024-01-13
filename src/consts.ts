@@ -76,7 +76,7 @@ export const OptionsMock = [
     available: true,
     price: 5000,
     image:
-      "https://e7.pngegg.com/pngimages/195/635/png-clipart-computer-icons-radar-radar-miscellaneous-business.png",
+      "https://avatars.mds.yandex.net/i?id=4fd5a6b70b9507737088ba8c7a0425fa3dec6fe4-8750921-images-thumbs&n=13",
   },
   {
     id: 6,
