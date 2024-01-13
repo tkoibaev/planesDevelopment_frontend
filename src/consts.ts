@@ -1,4 +1,4 @@
-export const DOMEN = "http://127.0.0.1:8000/";
+export const DOMEN = "http://127.0.0.1:8000/"
 
 export const CATEGORIES = [
   {
@@ -17,7 +17,7 @@ export const CATEGORIES = [
     id: 3,
     name: "Авионика",
   },
-];
+]
 // import engine from "./assets/engine.png"
 export const OptionsMock = [
   {
@@ -40,7 +40,7 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 2000,
-    image: "src/assets/mockImg/engine.png",
+    image: "https://www.svgrepo.com/show/323543/turbine.svg",
   },
   {
     id: 3,
@@ -86,4 +86,4 @@ export const OptionsMock = [
     price: 6000,
     image: "src/assets/mockImg/engine.png",
   },
-];
+]

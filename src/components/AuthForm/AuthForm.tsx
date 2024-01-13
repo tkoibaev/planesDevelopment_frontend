@@ -1,8 +1,7 @@
-import React from "react";
-import Button from "../Button/Button";
+import Button from "../Button/Button"
 
-import styles from "./AuthForm.module.scss";
-import { Link } from "react-router-dom";
+import styles from "./AuthForm.module.scss"
+import { Link } from "react-router-dom"
 
 const AuthForm = () => {
   return (
@@ -34,7 +33,7 @@ const AuthForm = () => {
         </span>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default AuthForm;
+export default AuthForm

@@ -1,5 +1,5 @@
 import "./App.css"
-import { Navigate, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import Header from "./components/Header/Header"
 import MainPage from "./pages/MainPage/MainPage"
 import PlanePage from "./pages/PlanePage/PlanePage"
@@ -14,7 +14,7 @@ function App() {
       <Breadcrumps />
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/planesDevelopment_frontend" element={<MainPage />} />
+        <Route path="/planesDevelopment_frontend/" element={<MainPage />} />
         {/* <Route path="/planes" element={<PlanePage />} /> */}
         <Route path="/planesDevelopment_frontend/:id" element={<PlanePage />} />
         <Route

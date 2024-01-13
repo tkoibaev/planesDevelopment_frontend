@@ -1,8 +1,7 @@
-import React from "react";
-import Button from "../Button/Button";
+import Button from "../Button/Button"
 
-import styles from "./RegForm.module.scss";
-import { Link } from "react-router-dom";
+import styles from "./RegForm.module.scss"
+import { Link } from "react-router-dom"
 
 const RegForm = () => {
   return (
@@ -40,7 +39,7 @@ const RegForm = () => {
         </span>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default RegForm;
+export default RegForm
