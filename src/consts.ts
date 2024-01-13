@@ -87,7 +87,6 @@ export const OptionsMock = [
     features: [""],
     available: true,
     price: 6000,
-    image:
-      "https://e7.pngegg.com/pngimages/195/635/png-clipart-computer-icons-radar-radar-miscellaneous-business.png",
+    image: "https://www.svgrepo.com/show/323543/turbine.svg",
   },
 ]
