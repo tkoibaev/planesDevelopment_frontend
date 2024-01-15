@@ -1,12 +1,20 @@
+.page_inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
 .content {
   // position: absolute;
   // margin-top: 50px;
   // padding-bottom: 100px;
   // top: 55%;
   // left: 50%;
-  width: 950px;
+  margin: 0 auto;
+  width: 800px;
   max-height: 500px;
   overflow-y: scroll;
+  // background-color: red;
   // -webkit-transform: translate(-50%, -50%);
   // transform: translate(-50%, -50%);
 }
@@ -20,7 +28,7 @@ table {
 th,
 td {
   padding: 15px;
-  background-color: #33cccc8f;
+  background-color: #0000008f;
   color: #000000;
 }
 
@@ -54,12 +62,19 @@ tbody td {
 }
 .filters {
   display: flex;
+  flex-direction: column;
   gap: 40px;
   margin-bottom: 30px;
+  // align-items: end;
+  &__text {
+    display: flex;
+    gap: 40px;
+    justify-content: space-between;
+  }
 }
 
 .input {
-  width: 300px;
+  width: 170px;
 }
 
 .date {

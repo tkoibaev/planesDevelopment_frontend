@@ -14,6 +14,7 @@ import ProfileInfo from "../ProfileInfo/ProfileInfo"
 import { RootState } from "../../store/store"
 
 const Header = () => {
+  const currentCart = useSelector((state: RootState) => state.user.current_cart)
   const location = useLocation()
   const cart = useSelector((state: RootState) => state.cart.items.length)
   const [v, sV] = useState(false)
@@ -48,7 +49,9 @@ const Header = () => {
             isAuth &&
             !isModerator &&
             (isCartEmpty != -1 ? (
-              <Link to="/planesDevelopment_frontend/cart">
+              <Link
+                to={`/planesDevelopment_frontend/application/${currentCart}`}
+              >
                 <div className={styles.cart}>
                   <img src={cartSvg} alt="Cart" />
                   <div className={styles.cart_badge}>{cart}</div>

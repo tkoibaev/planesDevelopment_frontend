@@ -282,30 +282,7 @@ const ApplicationsHistoryTable = () => {
     console.log(endDate)
   }
   return (
-    <>
-      {isModerator && (
-        <div className={styles.filters}>
-          <Input
-            className={styles.input}
-            searchValue={searchValue}
-            onChangeValue={(i) => dispatch(setAppInputValue(i))}
-          />
-          <DropDown
-            handleSelect={handleSelect}
-            options={STATUSES}
-            title={categoryValue.name}
-          />
-          <DateRangePicker
-            // locale={ru}
-            showDateDisplay={false}
-            className={styles.date}
-            rangeColors={["#33cccc", "#3ecf8e", "#fed14c"]}
-            ranges={[selectionRange]}
-            onChange={handleSelectDateRange}
-          />
-        </div>
-      )}
-
+    <div className={styles.page_inner}>
       <div className={styles.content}>
         <table {...getTableProps()}>
           <thead>
@@ -333,7 +310,34 @@ const ApplicationsHistoryTable = () => {
           </tbody>
         </table>
       </div>
-    </>
+      {isModerator && (
+        <div className={styles.filters}>
+          <div className={styles.filters__text}>
+            <Input
+              className={styles.input}
+              searchValue={searchValue}
+              onChangeValue={(i) => dispatch(setAppInputValue(i))}
+            />
+            <DropDown
+              handleSelect={handleSelect}
+              options={STATUSES}
+              title={categoryValue.name}
+            />
+          </div>
+
+          <div className={styles.filters__date}>
+            <DateRange
+              // locale={ru}
+              showDateDisplay={false}
+              className={styles.date}
+              rangeColors={["#33cccc", "#3ecf8e", "#fed14c"]}
+              ranges={[selectionRange]}
+              onChange={handleSelectDateRange}
+            />
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
 
